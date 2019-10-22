@@ -92,7 +92,7 @@ public class HelloWorldServer {
 
     @Override
     public void sayHello(HelloRequest req, StreamObserver<HelloResponse> responseObserver) {
-      HelloResponse reply = HelloResponse.newBuilder().setMessage("Hello " + req.getName()).build();
+      HelloResponse reply = HelloResponse.newBuilder().setVal(0).setMessage("Hello " + req.getName()).build();
       responseObserver.onNext(reply);
       responseObserver.onCompleted();
     }
