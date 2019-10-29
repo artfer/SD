@@ -32,22 +32,40 @@ syntax = "proto3";
 package helloworld;
 
 option java_multiple_files = true;
-option java_package = "org.jpdna.grpchello";
+option java_package = "server";
 option java_outer_classname = "HelloWorldProto";
 
 // The greeting service definition.
-service Greeter {
-  // Sends a greeting
-  rpc SayHello (HelloRequest) returns (HelloResponse) {}
+service Portal {
+
+  rpc SeedersList (ListSeedersRequest) returns (ListSeedersResponse) {}
+
+  rpc SeederSearch (SeederSearchRequest) returns (SeederSearchResponse) {}
+
+  rpc DownloadFile (DownloadFileRequest) returns (DownloadFileResponse) {}
+
+  rpc ListFiles (ListFilesRequest) returns (ListFilesResponse) {}
+
+  rpc InfoFile (InfoFileRequest) returns (InfoFileResponse) {}
+
 }
 
-// The request message containing the user's name.
-message HelloRequest {
-  string name = 1;
-}
+message ListSeedersRequest {}
 
-// The response message containing the greetings
-message HelloResponse {
-  string message = 1;
-  int32 val = 2;
-}
+message ListSeedersResponse {repeated string name = 1;}
+
+message SeederSearchRequest {string name = 1;}
+
+message SeederSearchResponse {repeated string name = 1;}
+
+message DownloadFileRequest {string name = 1;}
+
+message DownloadFileResponse {string name = 1;}
+
+message ListFilesRequest {string name = 1;}
+
+message ListFilesResponse {string name = 1;}
+
+message InfoFileRequest {string name = 1;}
+
+message InfoFileResponse {string name = 1;}
