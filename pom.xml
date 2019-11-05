@@ -21,7 +21,11 @@
           <version>3.4.3</version>
       </dependency>
 
-
+      <dependency>
+          <groupId>nginx-clojure</groupId>
+          <artifactId>nginx-clojure</artifactId>
+          <version>0.5.0</version>
+      </dependency>
 
     <dependency>
       <groupId>junit</groupId>

@@ -1,6 +1,8 @@
 package server;
+import static nginx.clojure.MiniConstants.*;
 
-public class AppServer {
+public class AppServer implements NginxJavaRingHandler {
+
 
 
 }
