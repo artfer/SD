@@ -1,5 +1,3 @@
-package server;
-
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
@@ -13,9 +11,9 @@ public class AppServer {
         jettyServer.setHandler(context);
 
         ServletHolder jerseyServlet = context.addServlet(org.glassfish.jersey.servlet.ServletContainer.class, "/*");
-        jerseyServlet.setInitOrder(0);
+        jerseyServlet.setInitOrder(1);
 
-        jerseyServlet.setInitParameter("jersey.config.server.provider.classnames", App.class.getCanonicalName());
+        jerseyServlet.setInitParameter("jersey.config.server.provider.packages", "db");
 
         try {
             jettyServer.start();
