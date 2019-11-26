@@ -78,9 +78,28 @@
 
 
       <dependency>
-          <groupId>com.alipay.sofa</groupId>
-          <artifactId>jraft-core</artifactId>
-          <version>1.2.6</version>
+          <groupId>org.apache.ratis</groupId>
+          <artifactId>ratis</artifactId>
+          <version>0.3.0</version>
+          <type>pom</type>
+      </dependency>
+
+      <dependency>
+          <artifactId>ratis-server</artifactId>
+          <version>0.3.0</version>
+          <groupId>org.apache.ratis</groupId>
+      </dependency>
+
+      <dependency>
+          <artifactId>ratis-client</artifactId>
+          <version>0.3.0</version>
+          <groupId>org.apache.ratis</groupId>
+      </dependency>
+
+      <dependency>
+          <artifactId>ratis-grpc</artifactId>
+          <version>0.3.0</version>
+          <groupId>org.apache.ratis</groupId>
       </dependency>
   </dependencies>
 
