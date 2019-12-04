@@ -13,7 +13,7 @@ public class AppServer {
         ServletHolder jerseyServlet = context.addServlet(org.glassfish.jersey.servlet.ServletContainer.class, "/*");
         jerseyServlet.setInitOrder(1);
 
-        jerseyServlet.setInitParameter("jersey.config.server.provider.packages", "info");
+        jerseyServlet.setInitParameter("jersey.config.server.provider.packages", "requests");
 
         try {
             jettyServer.start();

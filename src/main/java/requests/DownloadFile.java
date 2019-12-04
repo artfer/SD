@@ -1,5 +1,7 @@
 package requests;
 
+import org.apache.ratis.client.RaftClient;
+
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
