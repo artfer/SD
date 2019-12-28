@@ -1,20 +1,11 @@
 package raftus;
 
 
-import com.alipay.sofa.jraft.Node;
-import com.alipay.sofa.jraft.RaftServiceFactory;
-
 public class RaftServer {
 
 
-    Node node = new Node();
-    RaftServiceFactory raftServiceFactory = new RaftServiceFactory();
-    raftServiceFactory.
-
-
-
-
-
+    //Node node = new Node();
+    //RaftServiceFactory raftServiceFactory = new RaftServiceFactory();
 
 
 
@@ -35,6 +26,7 @@ public class RaftServer {
 //
 //        final Node node = new Node(opts);
 //        node.start();
+    //
 //    }
 
 
