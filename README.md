@@ -25,7 +25,7 @@ target/generated-sources
 
 protoc binary will need to be available in your PATH
 
-To run the server, from the root of the cloned repository run:
+To run the service.server, from the root of the cloned repository run:
 ```
 java -cp target/grpctest-1.0-SNAPSHOT-jar-with-dependencies.jar org.jpdna.grpchello.HelloWorldServer
 ````

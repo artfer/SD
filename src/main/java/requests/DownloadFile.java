@@ -1,5 +1,5 @@
 package requests;
-
+/*
 import org.apache.ratis.client.RaftClient;
 
 import javax.ws.rs.GET;
@@ -18,3 +18,4 @@ public class DownloadFile {
     }
 
 }
+*/
