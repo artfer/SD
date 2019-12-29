@@ -15,7 +15,7 @@
     <orderEntry type="jdk" jdkName="1.8" jdkType="JavaSDK" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="Bundled Protobuf Distribution" level="application" />
-    <orderEntry type="library" name="Maven: com.google.protobuf:protobuf-java:3.5.1" level="project" />
+    <orderEntry type="library" name="Maven: com.google.protobuf:protobuf-java:3.6.1" level="project" />
     <orderEntry type="library" name="Maven: io.grpc:grpc-netty-shaded:1.15.1" level="project" />
     <orderEntry type="library" name="Maven: io.grpc:grpc-core:1.15.1" level="project" />
     <orderEntry type="library" name="Maven: io.grpc:grpc-context:1.15.1" level="project" />
@@ -56,5 +56,20 @@
     <orderEntry type="library" name="Maven: net.java.dev.jna:jna-platform:4.4.0" level="project" />
     <orderEntry type="library" name="Maven: com.intellij:annotations:12.0" level="project" />
     <orderEntry type="library" name="Maven: io.dropwizard.metrics:metrics-core:4.0.2" level="project" />
+    <orderEntry type="library" name="Maven: io.atomix.copycat:copycat-client:1.2.8" level="project" />
+    <orderEntry type="library" name="Maven: io.atomix.copycat:copycat-server:1.2.8" level="project" />
+    <orderEntry type="library" name="Maven: io.atomix.copycat:copycat-protocol:1.2.8" level="project" />
+    <orderEntry type="library" name="Maven: io.atomix.catalyst:catalyst-transport:1.2.1" level="project" />
+    <orderEntry type="library" name="Maven: io.atomix.catalyst:catalyst-concurrent:1.2.1" level="project" />
+    <orderEntry type="library" name="Maven: io.atomix.catalyst:catalyst-serializer:1.2.1" level="project" />
+    <orderEntry type="library" name="Maven: io.atomix.catalyst:catalyst-buffer:1.2.1" level="project" />
+    <orderEntry type="library" name="Maven: io.atomix.catalyst:catalyst-common:1.2.1" level="project" />
+    <orderEntry type="library" name="Maven: io.atomix.catalyst:catalyst-netty:1.2.1" level="project" />
+    <orderEntry type="library" name="Maven: io.netty:netty-transport:4.1.5.Final" level="project" />
+    <orderEntry type="library" name="Maven: io.netty:netty-buffer:4.1.5.Final" level="project" />
+    <orderEntry type="library" name="Maven: io.netty:netty-common:4.1.5.Final" level="project" />
+    <orderEntry type="library" name="Maven: io.netty:netty-resolver:4.1.5.Final" level="project" />
+    <orderEntry type="library" name="Maven: io.netty:netty-handler:4.1.5.Final" level="project" />
+    <orderEntry type="library" name="Maven: io.netty:netty-codec:4.1.5.Final" level="project" />
   </component>
 </module>

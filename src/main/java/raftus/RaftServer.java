@@ -1,38 +1,41 @@
 package raftus;
 
 
-import com.alipay.sofa.jraft.Node;
-import com.alipay.sofa.jraft.RaftServiceFactory;
-import com.alipay.sofa.jraft.conf.Configuration;
-import com.alipay.sofa.jraft.entity.PeerId;
-import com.alipay.sofa.jraft.option.NodeOptions;
-import com.alipay.sofa.jraft.util.Endpoint;
+import io.atomix.catalyst.transport.Address;
+import io.atomix.catalyst.transport.netty.NettyTransport;
+import io.atomix.copycat.server.CopycatServer;
+import io.atomix.copycat.server.storage.Storage;
+import io.atomix.copycat.server.storage.StorageLevel;
 
-public class RaftServer {
-
-
-    Node node = new Node();
-    RaftServiceFactory raftServiceFactory = new RaftServiceFactory();
+import java.io.File;
 
 
-    RaftServer(final NodeOptions nodeOptions){
+public class RaftServer{
 
-    }
 
     public static void main(String[] args) {
-        Endpoint addr = new Endpoint("localhost", 8080);
-        Configuration conf = new Configuration();
-
-        for(int i=8080; i < 8090; i++) {
-            conf.addPeer(new PeerId("localhost", i));
-        }
-
-        System.out.println(conf.getPeers().toString());
-
-        final Node node = new Node();
-        node.start();
-   }
 
 
+        Address addr = new Address("localhost",5000);
+        CopycatServer.Builder builder = CopycatServer.builder(addr);
 
+        builder.withStateMachine(KeyValueStore::new);
+
+        builder.withTransport(NettyTransport.builder()
+                .withThreads(4)
+                .build());
+
+        builder.withStorage(Storage.builder()
+                .withDirectory(new File("logs"))
+                .withStorageLevel(StorageLevel.DISK)
+                .build());
+
+        CopycatServer server = builder.build();
+
+        server.bootstrap().thenAccept(srvr -> System.out.println(srvr + " has bootstrapped a cluster"));
+
+        Address clusterAddress = new Address("123.456.789.0", 5000);
+        server.join(clusterAddress).thenAccept(srvr -> System.out.println(srvr + " has joined the cluster"));
+
+    }
 }
