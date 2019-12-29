@@ -1,7 +1,5 @@
 package grpc;
 
-import java.net.UnknownHostException;
-
 import static io.grpc.MethodDescriptor.generateFullMethodName;
 import static io.grpc.stub.ClientCalls.asyncBidiStreamingCall;
 import static io.grpc.stub.ClientCalls.asyncClientStreamingCall;
@@ -178,7 +176,7 @@ public final class clientGrpc {
      * </pre>
      */
     public void downloadFile(grpc.Client.DownloadFileRequest request,
-        io.grpc.stub.StreamObserver<grpc.Client.DownloadFileResponse> responseObserver) throws UnknownHostException {
+        io.grpc.stub.StreamObserver<grpc.Client.DownloadFileResponse> responseObserver) {
       asyncUnimplementedUnaryCall(getDownloadFileMethod(), responseObserver);
     }
 

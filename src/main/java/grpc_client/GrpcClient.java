@@ -32,11 +32,11 @@ public class GrpcClient {
                                                         .build();
     }
 
-    public static void searByKeyword(){
+    public static void searchByKeyword(){
         ManagedChannel channel = ManagedChannelBuilder.forAddress(name, port).usePlaintext().build();
         clientGrpc.clientBlockingStub clientStub = clientGrpc.newBlockingStub(channel);
 
-        System.out.println("Key world: ");
+        System.out.println("Keyword/s:");
         Scanner sca = new Scanner(System.in);
         String keyword = sca.nextLine();
 
@@ -60,17 +60,30 @@ public class GrpcClient {
                                                                 .build();
     }
 
-    public static void listFile(){
 
+    public static void listFiles(){
+
+        System.out.println("Files encountered:");
     }
 
-    public static void Info(){
+    public static void infoFile(){
 
+        System.out.println("File Name: ");
+        Scanner sca = new Scanner(System.in);
+        String fileName = sca.nextLine();
+
+        System.out.println("File information of " + fileName + ":");
     }
 
     public static void play(){
 
+        System.out.println("File Name: ");
+        Scanner sca = new Scanner(System.in);
+        String fileName = sca.nextLine();
+
+        System.out.println("Playing file " + fileName + ":");
     }
+
 
     public static void main(String[] args) throws UnknownHostException {
 
@@ -82,10 +95,10 @@ public class GrpcClient {
             switch(command){
                 case 0:{ showMenu(); } break;
                 case 1:{ seederList(); } break;
-                case 2:{ searByKeyword(); } break;
+                case 2:{ searchByKeyword(); } break;
                 case 3:{ downloadFile(); } break;
-                case 4:{ listFile(); } break;
-                case 5:{ Info(); } break;
+                case 4:{ listFiles(); } break;
+                case 5:{ infoFile(); } break;
                 case 6:{ play(); } break;
                 case 7:{ loop = false; } break;
                 default:{ }
@@ -96,19 +109,6 @@ public class GrpcClient {
 
         System.out.println("Exit client");
         System.exit(0);
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     }
 
