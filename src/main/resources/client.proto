@@ -12,6 +12,9 @@ service client{
 
     // download file
     rpc DownloadFile(DownloadFileRequest) returns (DownloadFileResponse);
+
+    // info file
+    rpc InfoFile(InfoFileRequest) returns (InfoFileResponse);
 }
 
 message SeedersListRequest{}
@@ -35,4 +38,12 @@ message DownloadFileRequest{
 message DownloadFileResponse{
     string ip = 1;
     int32 port = 2;
+}
+
+message InfoFileRequest{
+    string file = 1;
+}
+
+message InfoFileResponse{
+    string info = 1;
 }

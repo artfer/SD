@@ -7,9 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class KeyValueStore extends StateMachine {
-    private Map<Integer, Commit> storage = new HashMap<>();
-
-
+    private Map<String, Commit> storage = new HashMap<>();
 
 
     public Object put(Commit<Put> commit){

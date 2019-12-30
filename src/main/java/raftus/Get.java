@@ -4,7 +4,7 @@ import io.atomix.copycat.Query;
 
 public class Get implements Query<Object> {
 
-    public Integer key;
+    public String key;
 
-    public Get(Integer key){ this.key = key; }
+    public Get(String key){ this.key = key; }
 }

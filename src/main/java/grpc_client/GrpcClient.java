@@ -5,6 +5,7 @@ import grpc.clientGrpc;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 
+import java.io.File;
 import java.net.UnknownHostException;
 import java.util.Scanner;
 
@@ -30,6 +31,10 @@ public class GrpcClient {
 
         Client.SeedersListRequest seedersListRequest = Client.SeedersListRequest.newBuilder()
                                                         .build();
+
+        Client.SeedersListResponse response = clientStub.seedersList(seedersListRequest);
+        System.out.println(response.getSeeders());
+
     }
 
     public static void searchByKeyword(){
@@ -69,10 +74,43 @@ public class GrpcClient {
     public static void infoFile(){
 
         System.out.println("File Name: ");
+
         Scanner sca = new Scanner(System.in);
         String fileName = sca.nextLine();
 
-        System.out.println("File information of " + fileName + ":");
+        String user = System.getProperty("user.name");
+        String filePath = "/home/"+user+"/Downloads/";
+        filePath += fileName;
+
+        File file = new File(filePath);
+
+        if (file.exists()) {
+
+            System.out.println("File information of " + fileName + ":");
+
+
+        } else {
+            System.err.println("File does not exist");
+        }
+
+        ManagedChannel channel = ManagedChannelBuilder.forAddress(name, port).usePlaintext().build();
+        clientGrpc.clientBlockingStub clientStub = clientGrpc.newBlockingStub(channel);
+
+        Client.InfoFileRequest infoFileRequest = Client
+                .InfoFileRequest
+                .newBuilder()
+                .setFile(fileName)
+                .build();
+
+        Client.InfoFileResponse response = clientStub.infoFile(infoFileRequest);
+        String str = response.getInfo();
+        System.out.println(str);
+
+
+
+
+
+
     }
 
     public static void play(){

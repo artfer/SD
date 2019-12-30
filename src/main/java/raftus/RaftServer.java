@@ -22,7 +22,7 @@ public class RaftServer{
         builder.withStateMachine(KeyValueStore::new);
 
         builder.withTransport(NettyTransport.builder()
-                .withThreads(4)
+                .withThreads(2)
                 .build());
 
         builder.withStorage(Storage.builder()
@@ -34,8 +34,16 @@ public class RaftServer{
 
         server.bootstrap().thenAccept(srvr -> System.out.println(srvr + " has bootstrapped a cluster"));
 
-        Address clusterAddress = new Address("123.456.789.0", 5000);
+        Address clusterAddress = new Address("localhost", 5001);
+        server.join(clusterAddress).thenAccept(srvr -> System.out.println(srvr + " has joined the cluster"));
+
+        clusterAddress = new Address("localhost", 5002);
+        server.join(clusterAddress).thenAccept(srvr -> System.out.println(srvr + " has joined the cluster"));
+
+        clusterAddress = new Address("localhost", 5003);
         server.join(clusterAddress).thenAccept(srvr -> System.out.println(srvr + " has joined the cluster"));
 
     }
+
+
 }

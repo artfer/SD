@@ -4,9 +4,9 @@ import io.atomix.copycat.Command;
 
 public class Delete implements Command<Object> {
 
-    public Integer key;
+    public String key;
 
-    public Delete(Integer key){
+    public Delete(String key){
         this.key = key;
     }
 }

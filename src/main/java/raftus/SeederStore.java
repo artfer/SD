@@ -1,12 +1,13 @@
 package raftus;
 
+import java.util.LinkedList;
+import java.util.List;
+
 public class SeederStore  {
 
     private String streamName = "";
     private String endpoint = "";
-    private String videoSize = "";
-    private int bitrate = 0;
-    private String keywords = "()";
+    private List<String> watching = new LinkedList();
 
     public String getStreamName() {
         return streamName;
@@ -24,27 +25,5 @@ public class SeederStore  {
         this.endpoint = endpoint;
     }
 
-    public String getVideoSize() {
-        return videoSize;
-    }
-
-    public void setVideoSize(String videoSize) {
-        this.videoSize = videoSize;
-    }
-
-    public int getBitrate() {
-        return bitrate;
-    }
-
-    public void setBitrate(int bitrate) {
-        this.bitrate = bitrate;
-    }
-
-    public String getKeywords() {
-        return keywords;
-    }
-
-    public void setKeywords(String keywords) {
-        this.keywords = keywords;
-    }
+    //TODO methods for watching list
 }

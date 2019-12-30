@@ -123,6 +123,38 @@ public final class clientGrpc {
      return getDownloadFileMethod;
   }
 
+  private static volatile io.grpc.MethodDescriptor<grpc.Client.InfoFileRequest,
+      grpc.Client.InfoFileResponse> getInfoFileMethod;
+
+  @io.grpc.stub.annotations.RpcMethod(
+      fullMethodName = SERVICE_NAME + '/' + "InfoFile",
+      requestType = grpc.Client.InfoFileRequest.class,
+      responseType = grpc.Client.InfoFileResponse.class,
+      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
+  public static io.grpc.MethodDescriptor<grpc.Client.InfoFileRequest,
+      grpc.Client.InfoFileResponse> getInfoFileMethod() {
+    io.grpc.MethodDescriptor<grpc.Client.InfoFileRequest, grpc.Client.InfoFileResponse> getInfoFileMethod;
+    if ((getInfoFileMethod = clientGrpc.getInfoFileMethod) == null) {
+      synchronized (clientGrpc.class) {
+        if ((getInfoFileMethod = clientGrpc.getInfoFileMethod) == null) {
+          clientGrpc.getInfoFileMethod = getInfoFileMethod = 
+              io.grpc.MethodDescriptor.<grpc.Client.InfoFileRequest, grpc.Client.InfoFileResponse>newBuilder()
+              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
+              .setFullMethodName(generateFullMethodName(
+                  "client", "InfoFile"))
+              .setSampledToLocalTracing(true)
+              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  grpc.Client.InfoFileRequest.getDefaultInstance()))
+              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  grpc.Client.InfoFileResponse.getDefaultInstance()))
+                  .setSchemaDescriptor(new clientMethodDescriptorSupplier("InfoFile"))
+                  .build();
+          }
+        }
+     }
+     return getInfoFileMethod;
+  }
+
   /**
    * Creates a new async stub that supports all call types for the service
    */
@@ -180,6 +212,16 @@ public final class clientGrpc {
       asyncUnimplementedUnaryCall(getDownloadFileMethod(), responseObserver);
     }
 
+    /**
+     * <pre>
+     * info file
+     * </pre>
+     */
+    public void infoFile(grpc.Client.InfoFileRequest request,
+        io.grpc.stub.StreamObserver<grpc.Client.InfoFileResponse> responseObserver) {
+      asyncUnimplementedUnaryCall(getInfoFileMethod(), responseObserver);
+    }
+
     @java.lang.Override public final io.grpc.ServerServiceDefinition bindService() {
       return io.grpc.ServerServiceDefinition.builder(getServiceDescriptor())
           .addMethod(
@@ -203,6 +245,13 @@ public final class clientGrpc {
                 grpc.Client.DownloadFileRequest,
                 grpc.Client.DownloadFileResponse>(
                   this, METHODID_DOWNLOAD_FILE)))
+          .addMethod(
+            getInfoFileMethod(),
+            asyncUnaryCall(
+              new MethodHandlers<
+                grpc.Client.InfoFileRequest,
+                grpc.Client.InfoFileResponse>(
+                  this, METHODID_INFO_FILE)))
           .build();
     }
   }
@@ -257,6 +306,17 @@ public final class clientGrpc {
       asyncUnaryCall(
           getChannel().newCall(getDownloadFileMethod(), getCallOptions()), request, responseObserver);
     }
+
+    /**
+     * <pre>
+     * info file
+     * </pre>
+     */
+    public void infoFile(grpc.Client.InfoFileRequest request,
+        io.grpc.stub.StreamObserver<grpc.Client.InfoFileResponse> responseObserver) {
+      asyncUnaryCall(
+          getChannel().newCall(getInfoFileMethod(), getCallOptions()), request, responseObserver);
+    }
   }
 
   /**
@@ -305,6 +365,16 @@ public final class clientGrpc {
     public grpc.Client.DownloadFileResponse downloadFile(grpc.Client.DownloadFileRequest request) {
       return blockingUnaryCall(
           getChannel(), getDownloadFileMethod(), getCallOptions(), request);
+    }
+
+    /**
+     * <pre>
+     * info file
+     * </pre>
+     */
+    public grpc.Client.InfoFileResponse infoFile(grpc.Client.InfoFileRequest request) {
+      return blockingUnaryCall(
+          getChannel(), getInfoFileMethod(), getCallOptions(), request);
     }
   }
 
@@ -358,11 +428,23 @@ public final class clientGrpc {
       return futureUnaryCall(
           getChannel().newCall(getDownloadFileMethod(), getCallOptions()), request);
     }
+
+    /**
+     * <pre>
+     * info file
+     * </pre>
+     */
+    public com.google.common.util.concurrent.ListenableFuture<grpc.Client.InfoFileResponse> infoFile(
+        grpc.Client.InfoFileRequest request) {
+      return futureUnaryCall(
+          getChannel().newCall(getInfoFileMethod(), getCallOptions()), request);
+    }
   }
 
   private static final int METHODID_SEEDERS_LIST = 0;
   private static final int METHODID_SEEDER_SEARCH_KEYWORD = 1;
   private static final int METHODID_DOWNLOAD_FILE = 2;
+  private static final int METHODID_INFO_FILE = 3;
 
   private static final class MethodHandlers<Req, Resp> implements
       io.grpc.stub.ServerCalls.UnaryMethod<Req, Resp>,
@@ -392,6 +474,10 @@ public final class clientGrpc {
         case METHODID_DOWNLOAD_FILE:
           serviceImpl.downloadFile((grpc.Client.DownloadFileRequest) request,
               (io.grpc.stub.StreamObserver<grpc.Client.DownloadFileResponse>) responseObserver);
+          break;
+        case METHODID_INFO_FILE:
+          serviceImpl.infoFile((grpc.Client.InfoFileRequest) request,
+              (io.grpc.stub.StreamObserver<grpc.Client.InfoFileResponse>) responseObserver);
           break;
         default:
           throw new AssertionError();
@@ -457,6 +543,7 @@ public final class clientGrpc {
               .addMethod(getSeedersListMethod())
               .addMethod(getSeederSearchKeywordMethod())
               .addMethod(getDownloadFileMethod())
+              .addMethod(getInfoFileMethod())
               .build();
         }
       }
