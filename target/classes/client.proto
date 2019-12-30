@@ -1,0 +1,49 @@
+syntax = "proto3";
+
+option java_package = "grpc";
+
+service client{
+
+    // list all seeders
+    rpc SeedersList(SeedersListRequest) returns (SeedersListResponse);
+
+    // list all seeders that match keywords
+    rpc SeederSearchKeyword(SeederSearchKeywordRequest) returns (SeederSearchKeywordResponse);
+
+    // download file
+    rpc DownloadFile(DownloadFileRequest) returns (DownloadFileResponse);
+
+    // info file
+    rpc InfoFile(InfoFileRequest) returns (InfoFileResponse);
+}
+
+message SeedersListRequest{}
+
+message SeedersListResponse{
+    string seeders = 1;
+}
+
+message SeederSearchKeywordRequest{
+    string keyword = 1;
+}
+
+message SeederSearchKeywordResponse{
+    string seeders = 1;
+}
+
+message DownloadFileRequest{
+    string file = 1;
+}
+
+message DownloadFileResponse{
+    string ip = 1;
+    int32 port = 2;
+}
+
+message InfoFileRequest{
+    string file = 1;
+}
+
+message InfoFileResponse{
+    string info = 1;
+}
