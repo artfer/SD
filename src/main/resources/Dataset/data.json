@@ -1,0 +1,33 @@
+[
+  {
+    "file_name": "Big Buck Bunny ",
+    "tags": ["Comedy", "Animation"],
+    "movie_length": "10m00s",
+    "year": 2008
+  },
+  {
+    "file_name": "The Letter",
+    "tags": ["Comedy", "Animation", "LEGO"],
+    "movie_length": "6m30s",
+    "year": 2003
+  },
+  {
+    "file_name": "The Vagabond",
+    "tags": ["Comedy"],
+    "movie_length": "24m43s",
+    "year": 1916
+  },
+  {
+    "file_name": "Night of the Living Dead",
+    "tags": ["Sci-Fi", "Horror"],
+    "movie_length": "95m17s",
+    "year": 1968
+  },
+  {
+    "file_name": "Popeye the Sailor Meets Ali Baba’s Forty Thieves",
+    "tags": ["Comedy", "Animation"],
+    "movie_length": "16m58s",
+    "year": 1937
+  }
+]
+
