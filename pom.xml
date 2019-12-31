@@ -7,6 +7,32 @@
     <name>EdgeNetflix</name>
 
     <dependencies>
+
+
+        <dependency>
+            <groupId>com.github.atomashpolskiy</groupId>
+            <artifactId>bt-core</artifactId>
+            <version>1.8</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.atomashpolskiy</groupId>
+            <artifactId>bt-http-tracker-client</artifactId>
+            <version>1.8</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.atomashpolskiy</groupId>
+            <artifactId>bt-dht</artifactId>
+            <version>1.8</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.atomashpolskiy</groupId>
+            <artifactId>bt-upnp</artifactId>
+            <version>1.8</version>
+        </dependency>
+
+
+
+
         <dependency>
             <groupId>com.google.protobuf</groupId>
             <artifactId>protobuf-java</artifactId>

@@ -33,7 +33,7 @@ public class GrpcClientServices extends clientGrpc.clientImplBase {
 
         //TODO read all files in movies folder
 
-        File folder = new File("/home/artfer/");
+        File folder = new File("/Users/lucparada/Movies/");
         File[] listOfFiles = folder.listFiles();
 
         String str = "";
