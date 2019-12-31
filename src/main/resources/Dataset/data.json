@@ -1,6 +1,7 @@
 [
   {
     "title": "Big Buck Bunny",
+    "file_name" : "big_buck_bunny_480p_stereo.avi",
     "tags": ["Comedy", "Animation"],
     "duration": "10m00s",
     "size": 156506028,
@@ -8,6 +9,7 @@
   },
   {
     "title": "The Letter",
+    "file_name" : "tl_512kb.mp4",
     "tags": ["Comedy", "Animation", "LEGO"],
     "duration": "6m30s",
     "size": 28211605,

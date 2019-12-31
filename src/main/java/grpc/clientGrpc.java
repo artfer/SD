@@ -19,7 +19,7 @@ import static io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall;
  */
 @javax.annotation.Generated(
     value = "by gRPC proto compiler (version 1.15.0)",
-    comments = "Source: client.proto")
+    comments = "Source: the_client.proto")
 public final class clientGrpc {
 
   private clientGrpc() {}
@@ -27,30 +27,30 @@ public final class clientGrpc {
   public static final String SERVICE_NAME = "client";
 
   // Static method descriptors that strictly reflect the proto.
-  private static volatile io.grpc.MethodDescriptor<grpc.Client.SeedersListRequest,
-      grpc.Client.SeedersListResponse> getSeedersListMethod;
+  private static volatile io.grpc.MethodDescriptor<grpc.TheClient.SeedersListRequest,
+      grpc.TheClient.SeedersListResponse> getSeedersListMethod;
 
   @io.grpc.stub.annotations.RpcMethod(
       fullMethodName = SERVICE_NAME + '/' + "SeedersList",
-      requestType = grpc.Client.SeedersListRequest.class,
-      responseType = grpc.Client.SeedersListResponse.class,
+      requestType = grpc.TheClient.SeedersListRequest.class,
+      responseType = grpc.TheClient.SeedersListResponse.class,
       methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
-  public static io.grpc.MethodDescriptor<grpc.Client.SeedersListRequest,
-      grpc.Client.SeedersListResponse> getSeedersListMethod() {
-    io.grpc.MethodDescriptor<grpc.Client.SeedersListRequest, grpc.Client.SeedersListResponse> getSeedersListMethod;
+  public static io.grpc.MethodDescriptor<grpc.TheClient.SeedersListRequest,
+      grpc.TheClient.SeedersListResponse> getSeedersListMethod() {
+    io.grpc.MethodDescriptor<grpc.TheClient.SeedersListRequest, grpc.TheClient.SeedersListResponse> getSeedersListMethod;
     if ((getSeedersListMethod = clientGrpc.getSeedersListMethod) == null) {
       synchronized (clientGrpc.class) {
         if ((getSeedersListMethod = clientGrpc.getSeedersListMethod) == null) {
           clientGrpc.getSeedersListMethod = getSeedersListMethod = 
-              io.grpc.MethodDescriptor.<grpc.Client.SeedersListRequest, grpc.Client.SeedersListResponse>newBuilder()
+              io.grpc.MethodDescriptor.<grpc.TheClient.SeedersListRequest, grpc.TheClient.SeedersListResponse>newBuilder()
               .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
               .setFullMethodName(generateFullMethodName(
                   "client", "SeedersList"))
               .setSampledToLocalTracing(true)
               .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  grpc.Client.SeedersListRequest.getDefaultInstance()))
+                  grpc.TheClient.SeedersListRequest.getDefaultInstance()))
               .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  grpc.Client.SeedersListResponse.getDefaultInstance()))
+                  grpc.TheClient.SeedersListResponse.getDefaultInstance()))
                   .setSchemaDescriptor(new clientMethodDescriptorSupplier("SeedersList"))
                   .build();
           }
@@ -59,30 +59,30 @@ public final class clientGrpc {
      return getSeedersListMethod;
   }
 
-  private static volatile io.grpc.MethodDescriptor<grpc.Client.SeederSearchKeywordRequest,
-      grpc.Client.SeederSearchKeywordResponse> getSeederSearchKeywordMethod;
+  private static volatile io.grpc.MethodDescriptor<grpc.TheClient.SeederSearchKeywordRequest,
+      grpc.TheClient.SeederSearchKeywordResponse> getSeederSearchKeywordMethod;
 
   @io.grpc.stub.annotations.RpcMethod(
       fullMethodName = SERVICE_NAME + '/' + "SeederSearchKeyword",
-      requestType = grpc.Client.SeederSearchKeywordRequest.class,
-      responseType = grpc.Client.SeederSearchKeywordResponse.class,
+      requestType = grpc.TheClient.SeederSearchKeywordRequest.class,
+      responseType = grpc.TheClient.SeederSearchKeywordResponse.class,
       methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
-  public static io.grpc.MethodDescriptor<grpc.Client.SeederSearchKeywordRequest,
-      grpc.Client.SeederSearchKeywordResponse> getSeederSearchKeywordMethod() {
-    io.grpc.MethodDescriptor<grpc.Client.SeederSearchKeywordRequest, grpc.Client.SeederSearchKeywordResponse> getSeederSearchKeywordMethod;
+  public static io.grpc.MethodDescriptor<grpc.TheClient.SeederSearchKeywordRequest,
+      grpc.TheClient.SeederSearchKeywordResponse> getSeederSearchKeywordMethod() {
+    io.grpc.MethodDescriptor<grpc.TheClient.SeederSearchKeywordRequest, grpc.TheClient.SeederSearchKeywordResponse> getSeederSearchKeywordMethod;
     if ((getSeederSearchKeywordMethod = clientGrpc.getSeederSearchKeywordMethod) == null) {
       synchronized (clientGrpc.class) {
         if ((getSeederSearchKeywordMethod = clientGrpc.getSeederSearchKeywordMethod) == null) {
           clientGrpc.getSeederSearchKeywordMethod = getSeederSearchKeywordMethod = 
-              io.grpc.MethodDescriptor.<grpc.Client.SeederSearchKeywordRequest, grpc.Client.SeederSearchKeywordResponse>newBuilder()
+              io.grpc.MethodDescriptor.<grpc.TheClient.SeederSearchKeywordRequest, grpc.TheClient.SeederSearchKeywordResponse>newBuilder()
               .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
               .setFullMethodName(generateFullMethodName(
                   "client", "SeederSearchKeyword"))
               .setSampledToLocalTracing(true)
               .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  grpc.Client.SeederSearchKeywordRequest.getDefaultInstance()))
+                  grpc.TheClient.SeederSearchKeywordRequest.getDefaultInstance()))
               .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  grpc.Client.SeederSearchKeywordResponse.getDefaultInstance()))
+                  grpc.TheClient.SeederSearchKeywordResponse.getDefaultInstance()))
                   .setSchemaDescriptor(new clientMethodDescriptorSupplier("SeederSearchKeyword"))
                   .build();
           }
@@ -91,30 +91,30 @@ public final class clientGrpc {
      return getSeederSearchKeywordMethod;
   }
 
-  private static volatile io.grpc.MethodDescriptor<grpc.Client.DownloadFileRequest,
-      grpc.Client.DownloadFileResponse> getDownloadFileMethod;
+  private static volatile io.grpc.MethodDescriptor<grpc.TheClient.DownloadFileRequest,
+      grpc.TheClient.DownloadFileResponse> getDownloadFileMethod;
 
   @io.grpc.stub.annotations.RpcMethod(
       fullMethodName = SERVICE_NAME + '/' + "DownloadFile",
-      requestType = grpc.Client.DownloadFileRequest.class,
-      responseType = grpc.Client.DownloadFileResponse.class,
+      requestType = grpc.TheClient.DownloadFileRequest.class,
+      responseType = grpc.TheClient.DownloadFileResponse.class,
       methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
-  public static io.grpc.MethodDescriptor<grpc.Client.DownloadFileRequest,
-      grpc.Client.DownloadFileResponse> getDownloadFileMethod() {
-    io.grpc.MethodDescriptor<grpc.Client.DownloadFileRequest, grpc.Client.DownloadFileResponse> getDownloadFileMethod;
+  public static io.grpc.MethodDescriptor<grpc.TheClient.DownloadFileRequest,
+      grpc.TheClient.DownloadFileResponse> getDownloadFileMethod() {
+    io.grpc.MethodDescriptor<grpc.TheClient.DownloadFileRequest, grpc.TheClient.DownloadFileResponse> getDownloadFileMethod;
     if ((getDownloadFileMethod = clientGrpc.getDownloadFileMethod) == null) {
       synchronized (clientGrpc.class) {
         if ((getDownloadFileMethod = clientGrpc.getDownloadFileMethod) == null) {
           clientGrpc.getDownloadFileMethod = getDownloadFileMethod = 
-              io.grpc.MethodDescriptor.<grpc.Client.DownloadFileRequest, grpc.Client.DownloadFileResponse>newBuilder()
+              io.grpc.MethodDescriptor.<grpc.TheClient.DownloadFileRequest, grpc.TheClient.DownloadFileResponse>newBuilder()
               .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
               .setFullMethodName(generateFullMethodName(
                   "client", "DownloadFile"))
               .setSampledToLocalTracing(true)
               .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  grpc.Client.DownloadFileRequest.getDefaultInstance()))
+                  grpc.TheClient.DownloadFileRequest.getDefaultInstance()))
               .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  grpc.Client.DownloadFileResponse.getDefaultInstance()))
+                  grpc.TheClient.DownloadFileResponse.getDefaultInstance()))
                   .setSchemaDescriptor(new clientMethodDescriptorSupplier("DownloadFile"))
                   .build();
           }
@@ -123,30 +123,30 @@ public final class clientGrpc {
      return getDownloadFileMethod;
   }
 
-  private static volatile io.grpc.MethodDescriptor<grpc.Client.InfoFileRequest,
-      grpc.Client.InfoFileResponse> getInfoFileMethod;
+  private static volatile io.grpc.MethodDescriptor<grpc.TheClient.InfoFileRequest,
+      grpc.TheClient.InfoFileResponse> getInfoFileMethod;
 
   @io.grpc.stub.annotations.RpcMethod(
       fullMethodName = SERVICE_NAME + '/' + "InfoFile",
-      requestType = grpc.Client.InfoFileRequest.class,
-      responseType = grpc.Client.InfoFileResponse.class,
+      requestType = grpc.TheClient.InfoFileRequest.class,
+      responseType = grpc.TheClient.InfoFileResponse.class,
       methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
-  public static io.grpc.MethodDescriptor<grpc.Client.InfoFileRequest,
-      grpc.Client.InfoFileResponse> getInfoFileMethod() {
-    io.grpc.MethodDescriptor<grpc.Client.InfoFileRequest, grpc.Client.InfoFileResponse> getInfoFileMethod;
+  public static io.grpc.MethodDescriptor<grpc.TheClient.InfoFileRequest,
+      grpc.TheClient.InfoFileResponse> getInfoFileMethod() {
+    io.grpc.MethodDescriptor<grpc.TheClient.InfoFileRequest, grpc.TheClient.InfoFileResponse> getInfoFileMethod;
     if ((getInfoFileMethod = clientGrpc.getInfoFileMethod) == null) {
       synchronized (clientGrpc.class) {
         if ((getInfoFileMethod = clientGrpc.getInfoFileMethod) == null) {
           clientGrpc.getInfoFileMethod = getInfoFileMethod = 
-              io.grpc.MethodDescriptor.<grpc.Client.InfoFileRequest, grpc.Client.InfoFileResponse>newBuilder()
+              io.grpc.MethodDescriptor.<grpc.TheClient.InfoFileRequest, grpc.TheClient.InfoFileResponse>newBuilder()
               .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
               .setFullMethodName(generateFullMethodName(
                   "client", "InfoFile"))
               .setSampledToLocalTracing(true)
               .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  grpc.Client.InfoFileRequest.getDefaultInstance()))
+                  grpc.TheClient.InfoFileRequest.getDefaultInstance()))
               .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  grpc.Client.InfoFileResponse.getDefaultInstance()))
+                  grpc.TheClient.InfoFileResponse.getDefaultInstance()))
                   .setSchemaDescriptor(new clientMethodDescriptorSupplier("InfoFile"))
                   .build();
           }
@@ -187,8 +187,8 @@ public final class clientGrpc {
      * list all seeders
      * </pre>
      */
-    public void seedersList(grpc.Client.SeedersListRequest request,
-        io.grpc.stub.StreamObserver<grpc.Client.SeedersListResponse> responseObserver) {
+    public void seedersList(grpc.TheClient.SeedersListRequest request,
+        io.grpc.stub.StreamObserver<grpc.TheClient.SeedersListResponse> responseObserver) {
       asyncUnimplementedUnaryCall(getSeedersListMethod(), responseObserver);
     }
 
@@ -197,8 +197,8 @@ public final class clientGrpc {
      * list all seeders that match keywords
      * </pre>
      */
-    public void seederSearchKeyword(grpc.Client.SeederSearchKeywordRequest request,
-        io.grpc.stub.StreamObserver<grpc.Client.SeederSearchKeywordResponse> responseObserver) {
+    public void seederSearchKeyword(grpc.TheClient.SeederSearchKeywordRequest request,
+        io.grpc.stub.StreamObserver<grpc.TheClient.SeederSearchKeywordResponse> responseObserver) {
       asyncUnimplementedUnaryCall(getSeederSearchKeywordMethod(), responseObserver);
     }
 
@@ -207,8 +207,8 @@ public final class clientGrpc {
      * download file
      * </pre>
      */
-    public void downloadFile(grpc.Client.DownloadFileRequest request,
-        io.grpc.stub.StreamObserver<grpc.Client.DownloadFileResponse> responseObserver) {
+    public void downloadFile(grpc.TheClient.DownloadFileRequest request,
+        io.grpc.stub.StreamObserver<grpc.TheClient.DownloadFileResponse> responseObserver) {
       asyncUnimplementedUnaryCall(getDownloadFileMethod(), responseObserver);
     }
 
@@ -217,8 +217,8 @@ public final class clientGrpc {
      * info file
      * </pre>
      */
-    public void infoFile(grpc.Client.InfoFileRequest request,
-        io.grpc.stub.StreamObserver<grpc.Client.InfoFileResponse> responseObserver) {
+    public void infoFile(grpc.TheClient.InfoFileRequest request,
+        io.grpc.stub.StreamObserver<grpc.TheClient.InfoFileResponse> responseObserver) {
       asyncUnimplementedUnaryCall(getInfoFileMethod(), responseObserver);
     }
 
@@ -228,29 +228,29 @@ public final class clientGrpc {
             getSeedersListMethod(),
             asyncUnaryCall(
               new MethodHandlers<
-                grpc.Client.SeedersListRequest,
-                grpc.Client.SeedersListResponse>(
+                grpc.TheClient.SeedersListRequest,
+                grpc.TheClient.SeedersListResponse>(
                   this, METHODID_SEEDERS_LIST)))
           .addMethod(
             getSeederSearchKeywordMethod(),
             asyncUnaryCall(
               new MethodHandlers<
-                grpc.Client.SeederSearchKeywordRequest,
-                grpc.Client.SeederSearchKeywordResponse>(
+                grpc.TheClient.SeederSearchKeywordRequest,
+                grpc.TheClient.SeederSearchKeywordResponse>(
                   this, METHODID_SEEDER_SEARCH_KEYWORD)))
           .addMethod(
             getDownloadFileMethod(),
             asyncUnaryCall(
               new MethodHandlers<
-                grpc.Client.DownloadFileRequest,
-                grpc.Client.DownloadFileResponse>(
+                grpc.TheClient.DownloadFileRequest,
+                grpc.TheClient.DownloadFileResponse>(
                   this, METHODID_DOWNLOAD_FILE)))
           .addMethod(
             getInfoFileMethod(),
             asyncUnaryCall(
               new MethodHandlers<
-                grpc.Client.InfoFileRequest,
-                grpc.Client.InfoFileResponse>(
+                grpc.TheClient.InfoFileRequest,
+                grpc.TheClient.InfoFileResponse>(
                   this, METHODID_INFO_FILE)))
           .build();
     }
@@ -279,8 +279,8 @@ public final class clientGrpc {
      * list all seeders
      * </pre>
      */
-    public void seedersList(grpc.Client.SeedersListRequest request,
-        io.grpc.stub.StreamObserver<grpc.Client.SeedersListResponse> responseObserver) {
+    public void seedersList(grpc.TheClient.SeedersListRequest request,
+        io.grpc.stub.StreamObserver<grpc.TheClient.SeedersListResponse> responseObserver) {
       asyncUnaryCall(
           getChannel().newCall(getSeedersListMethod(), getCallOptions()), request, responseObserver);
     }
@@ -290,8 +290,8 @@ public final class clientGrpc {
      * list all seeders that match keywords
      * </pre>
      */
-    public void seederSearchKeyword(grpc.Client.SeederSearchKeywordRequest request,
-        io.grpc.stub.StreamObserver<grpc.Client.SeederSearchKeywordResponse> responseObserver) {
+    public void seederSearchKeyword(grpc.TheClient.SeederSearchKeywordRequest request,
+        io.grpc.stub.StreamObserver<grpc.TheClient.SeederSearchKeywordResponse> responseObserver) {
       asyncUnaryCall(
           getChannel().newCall(getSeederSearchKeywordMethod(), getCallOptions()), request, responseObserver);
     }
@@ -301,8 +301,8 @@ public final class clientGrpc {
      * download file
      * </pre>
      */
-    public void downloadFile(grpc.Client.DownloadFileRequest request,
-        io.grpc.stub.StreamObserver<grpc.Client.DownloadFileResponse> responseObserver) {
+    public void downloadFile(grpc.TheClient.DownloadFileRequest request,
+        io.grpc.stub.StreamObserver<grpc.TheClient.DownloadFileResponse> responseObserver) {
       asyncUnaryCall(
           getChannel().newCall(getDownloadFileMethod(), getCallOptions()), request, responseObserver);
     }
@@ -312,8 +312,8 @@ public final class clientGrpc {
      * info file
      * </pre>
      */
-    public void infoFile(grpc.Client.InfoFileRequest request,
-        io.grpc.stub.StreamObserver<grpc.Client.InfoFileResponse> responseObserver) {
+    public void infoFile(grpc.TheClient.InfoFileRequest request,
+        io.grpc.stub.StreamObserver<grpc.TheClient.InfoFileResponse> responseObserver) {
       asyncUnaryCall(
           getChannel().newCall(getInfoFileMethod(), getCallOptions()), request, responseObserver);
     }
@@ -342,7 +342,7 @@ public final class clientGrpc {
      * list all seeders
      * </pre>
      */
-    public grpc.Client.SeedersListResponse seedersList(grpc.Client.SeedersListRequest request) {
+    public grpc.TheClient.SeedersListResponse seedersList(grpc.TheClient.SeedersListRequest request) {
       return blockingUnaryCall(
           getChannel(), getSeedersListMethod(), getCallOptions(), request);
     }
@@ -352,7 +352,7 @@ public final class clientGrpc {
      * list all seeders that match keywords
      * </pre>
      */
-    public grpc.Client.SeederSearchKeywordResponse seederSearchKeyword(grpc.Client.SeederSearchKeywordRequest request) {
+    public grpc.TheClient.SeederSearchKeywordResponse seederSearchKeyword(grpc.TheClient.SeederSearchKeywordRequest request) {
       return blockingUnaryCall(
           getChannel(), getSeederSearchKeywordMethod(), getCallOptions(), request);
     }
@@ -362,7 +362,7 @@ public final class clientGrpc {
      * download file
      * </pre>
      */
-    public grpc.Client.DownloadFileResponse downloadFile(grpc.Client.DownloadFileRequest request) {
+    public grpc.TheClient.DownloadFileResponse downloadFile(grpc.TheClient.DownloadFileRequest request) {
       return blockingUnaryCall(
           getChannel(), getDownloadFileMethod(), getCallOptions(), request);
     }
@@ -372,7 +372,7 @@ public final class clientGrpc {
      * info file
      * </pre>
      */
-    public grpc.Client.InfoFileResponse infoFile(grpc.Client.InfoFileRequest request) {
+    public grpc.TheClient.InfoFileResponse infoFile(grpc.TheClient.InfoFileRequest request) {
       return blockingUnaryCall(
           getChannel(), getInfoFileMethod(), getCallOptions(), request);
     }
@@ -401,8 +401,8 @@ public final class clientGrpc {
      * list all seeders
      * </pre>
      */
-    public com.google.common.util.concurrent.ListenableFuture<grpc.Client.SeedersListResponse> seedersList(
-        grpc.Client.SeedersListRequest request) {
+    public com.google.common.util.concurrent.ListenableFuture<grpc.TheClient.SeedersListResponse> seedersList(
+        grpc.TheClient.SeedersListRequest request) {
       return futureUnaryCall(
           getChannel().newCall(getSeedersListMethod(), getCallOptions()), request);
     }
@@ -412,8 +412,8 @@ public final class clientGrpc {
      * list all seeders that match keywords
      * </pre>
      */
-    public com.google.common.util.concurrent.ListenableFuture<grpc.Client.SeederSearchKeywordResponse> seederSearchKeyword(
-        grpc.Client.SeederSearchKeywordRequest request) {
+    public com.google.common.util.concurrent.ListenableFuture<grpc.TheClient.SeederSearchKeywordResponse> seederSearchKeyword(
+        grpc.TheClient.SeederSearchKeywordRequest request) {
       return futureUnaryCall(
           getChannel().newCall(getSeederSearchKeywordMethod(), getCallOptions()), request);
     }
@@ -423,8 +423,8 @@ public final class clientGrpc {
      * download file
      * </pre>
      */
-    public com.google.common.util.concurrent.ListenableFuture<grpc.Client.DownloadFileResponse> downloadFile(
-        grpc.Client.DownloadFileRequest request) {
+    public com.google.common.util.concurrent.ListenableFuture<grpc.TheClient.DownloadFileResponse> downloadFile(
+        grpc.TheClient.DownloadFileRequest request) {
       return futureUnaryCall(
           getChannel().newCall(getDownloadFileMethod(), getCallOptions()), request);
     }
@@ -434,8 +434,8 @@ public final class clientGrpc {
      * info file
      * </pre>
      */
-    public com.google.common.util.concurrent.ListenableFuture<grpc.Client.InfoFileResponse> infoFile(
-        grpc.Client.InfoFileRequest request) {
+    public com.google.common.util.concurrent.ListenableFuture<grpc.TheClient.InfoFileResponse> infoFile(
+        grpc.TheClient.InfoFileRequest request) {
       return futureUnaryCall(
           getChannel().newCall(getInfoFileMethod(), getCallOptions()), request);
     }
@@ -464,20 +464,20 @@ public final class clientGrpc {
     public void invoke(Req request, io.grpc.stub.StreamObserver<Resp> responseObserver) {
       switch (methodId) {
         case METHODID_SEEDERS_LIST:
-          serviceImpl.seedersList((grpc.Client.SeedersListRequest) request,
-              (io.grpc.stub.StreamObserver<grpc.Client.SeedersListResponse>) responseObserver);
+          serviceImpl.seedersList((grpc.TheClient.SeedersListRequest) request,
+              (io.grpc.stub.StreamObserver<grpc.TheClient.SeedersListResponse>) responseObserver);
           break;
         case METHODID_SEEDER_SEARCH_KEYWORD:
-          serviceImpl.seederSearchKeyword((grpc.Client.SeederSearchKeywordRequest) request,
-              (io.grpc.stub.StreamObserver<grpc.Client.SeederSearchKeywordResponse>) responseObserver);
+          serviceImpl.seederSearchKeyword((grpc.TheClient.SeederSearchKeywordRequest) request,
+              (io.grpc.stub.StreamObserver<grpc.TheClient.SeederSearchKeywordResponse>) responseObserver);
           break;
         case METHODID_DOWNLOAD_FILE:
-          serviceImpl.downloadFile((grpc.Client.DownloadFileRequest) request,
-              (io.grpc.stub.StreamObserver<grpc.Client.DownloadFileResponse>) responseObserver);
+          serviceImpl.downloadFile((grpc.TheClient.DownloadFileRequest) request,
+              (io.grpc.stub.StreamObserver<grpc.TheClient.DownloadFileResponse>) responseObserver);
           break;
         case METHODID_INFO_FILE:
-          serviceImpl.infoFile((grpc.Client.InfoFileRequest) request,
-              (io.grpc.stub.StreamObserver<grpc.Client.InfoFileResponse>) responseObserver);
+          serviceImpl.infoFile((grpc.TheClient.InfoFileRequest) request,
+              (io.grpc.stub.StreamObserver<grpc.TheClient.InfoFileResponse>) responseObserver);
           break;
         default:
           throw new AssertionError();
@@ -501,7 +501,7 @@ public final class clientGrpc {
 
     @java.lang.Override
     public com.google.protobuf.Descriptors.FileDescriptor getFileDescriptor() {
-      return grpc.Client.getDescriptor();
+      return grpc.TheClient.getDescriptor();
     }
 
     @java.lang.Override

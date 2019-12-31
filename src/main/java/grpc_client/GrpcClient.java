@@ -1,6 +1,7 @@
 package grpc_client;
 
-import grpc.Client;
+
+import grpc.TheClient;
 import grpc.clientGrpc;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
@@ -11,8 +12,8 @@ import java.util.Scanner;
 
 public class GrpcClient {
 
-        static String  name = "localhost";
-        static int port = 8989;
+    static String  name = "localhost";
+    static int port = 8989;
 
     public static void showMenu(){
         System.out.println("0: Menu");
@@ -29,10 +30,10 @@ public class GrpcClient {
         ManagedChannel channel = ManagedChannelBuilder.forAddress(name, port).usePlaintext().build();
         clientGrpc.clientBlockingStub clientStub = clientGrpc.newBlockingStub(channel);
 
-        Client.SeedersListRequest seedersListRequest = Client.SeedersListRequest.newBuilder()
-                                                        .build();
+        TheClient.SeedersListRequest seedersListRequest = TheClient.SeedersListRequest.newBuilder()
+                .build();
 
-        Client.SeedersListResponse response = clientStub.seedersList(seedersListRequest);
+        TheClient.SeedersListResponse response = clientStub.seedersList(seedersListRequest);
         System.out.println(response.getSeeders());
 
     }
@@ -45,13 +46,14 @@ public class GrpcClient {
         Scanner sca = new Scanner(System.in);
         String keyword = sca.nextLine();
 
-        Client.SeederSearchKeywordRequest seederSearchKeywordRequest = Client.SeederSearchKeywordRequest
-                                                                        .newBuilder()
-                                                                        .setKeyword(keyword)
-                                                                        .build();
+        TheClient.SeederSearchKeywordRequest seederSearchKeywordRequest = TheClient.SeederSearchKeywordRequest
+                .newBuilder()
+                .setKeyword(keyword)
+                .build();
     }
 
     public static void downloadFile(){
+
         ManagedChannel channel = ManagedChannelBuilder.forAddress(name, port).usePlaintext().build();
         clientGrpc.clientBlockingStub clientStub = clientGrpc.newBlockingStub(channel);
 
@@ -59,10 +61,17 @@ public class GrpcClient {
         Scanner sca = new Scanner(System.in);
         String fileName = sca.nextLine();
 
-        Client.DownloadFileRequest downloadFileRequest = Client.DownloadFileRequest
-                                                                .newBuilder()
-                                                                .setFile(fileName)
-                                                                .build();
+        TheClient.DownloadFileRequest downloadFileRequest = TheClient.DownloadFileRequest
+                .newBuilder()
+                .setFile(fileName)
+                .build();
+
+        TheClient.DownloadFileResponse response = clientStub.downloadFile(downloadFileRequest);
+        System.out.println(response.getPort());
+
+
+
+
     }
 
 
@@ -88,29 +97,25 @@ public class GrpcClient {
 
             System.out.println("File information of " + fileName + ":");
 
+            ManagedChannel channel = ManagedChannelBuilder.forAddress(name, port).usePlaintext().build();
+            clientGrpc.clientBlockingStub clientStub = clientGrpc.newBlockingStub(channel);
+
+            TheClient.InfoFileRequest infoFileRequest = TheClient
+                    .InfoFileRequest
+                    .newBuilder()
+                    .setFile(fileName)
+                    .build();
+
+            TheClient.InfoFileResponse response = clientStub.infoFile(infoFileRequest);
+            String str = response.getInfo();
+
+            System.out.println(str);
+
+
 
         } else {
             System.err.println("File does not exist");
         }
-
-        ManagedChannel channel = ManagedChannelBuilder.forAddress(name, port).usePlaintext().build();
-        clientGrpc.clientBlockingStub clientStub = clientGrpc.newBlockingStub(channel);
-
-        Client.InfoFileRequest infoFileRequest = Client
-                .InfoFileRequest
-                .newBuilder()
-                .setFile(fileName)
-                .build();
-
-        Client.InfoFileResponse response = clientStub.infoFile(infoFileRequest);
-        String str = response.getInfo();
-        System.out.println(str);
-
-
-
-
-
-
     }
 
     public static void play(){

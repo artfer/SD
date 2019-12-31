@@ -1,26 +1,34 @@
 package service;
 
 
-import grpc.Client;
+import grpc.TheClient;
 import grpc.clientGrpc;
+import grpc_seeder.GrpcSeeder;
+import io.atomix.catalyst.transport.Address;
+import io.atomix.catalyst.transport.netty.NettyTransport;
+import io.atomix.copycat.client.CopycatClient;
 import io.grpc.stub.StreamObserver;
-import org.json.simple.JSONObject;
+import me.alexpanov.net.FreePortFinder;
 import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+import raftus.Get;
+import raftus.Put;
+import raftus.SeederStore;
 
 import java.io.File;
 import java.io.FileReader;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
-import java.util.Random;
+import java.io.IOException;
+import java.util.concurrent.ExecutionException;
 
 
 public class GrpcClientServices extends clientGrpc.clientImplBase {
     @Override
-    public void seedersList(Client.SeedersListRequest request, StreamObserver<Client.SeedersListResponse> responseObserver) {
+    public void seedersList(TheClient.SeedersListRequest request, StreamObserver<TheClient.SeedersListResponse> responseObserver) {
         //super.seedersList(request, responseObserver);
 
-        Client.SeedersListResponse.Builder response = Client.SeedersListResponse.newBuilder();
+        TheClient.SeedersListResponse.Builder response = TheClient.SeedersListResponse.newBuilder();
         System.out.println("seedersList");
 
         //TODO read all files in movies folder
@@ -40,11 +48,11 @@ public class GrpcClientServices extends clientGrpc.clientImplBase {
     }
 
     @Override
-    public void seederSearchKeyword(Client.SeederSearchKeywordRequest request, StreamObserver<Client.SeederSearchKeywordResponse> responseObserver) {
+    public void seederSearchKeyword(TheClient.SeederSearchKeywordRequest request, StreamObserver<TheClient.SeederSearchKeywordResponse> responseObserver) {
 //        super.seederSearchKeyword(request, responseObserver);
         String keyword = request.getKeyword();
 
-        Client.SeederSearchKeywordResponse.Builder response = Client.SeederSearchKeywordResponse.newBuilder();
+        TheClient.SeederSearchKeywordResponse.Builder response = TheClient.SeederSearchKeywordResponse.newBuilder();
 
         //TODO send info to raft
 
@@ -55,17 +63,96 @@ public class GrpcClientServices extends clientGrpc.clientImplBase {
         responseObserver.onCompleted();
     }
 
+    static int portTest;
+
     @Override
-    public void downloadFile(Client.DownloadFileRequest request, StreamObserver<Client.DownloadFileResponse> responseObserver) {
+    public void downloadFile(TheClient.DownloadFileRequest request, StreamObserver<TheClient.DownloadFileResponse> responseObserver) {
         //super.downloadFile(request, responseObserver);
-        String fileName = request.getFile();
-
-        Client.DownloadFileResponse.Builder response = Client.DownloadFileResponse.newBuilder();
-
-        //TODO send info to raft
 
         System.out.println("downloadFile");
 
+        String title = request.getFile();
+
+        if (movieExists(title)) {
+
+            TheClient.DownloadFileResponse.Builder response = TheClient.DownloadFileResponse.newBuilder();
+
+            //TODO send info to raft
+
+            CopycatClient client = CopycatClient.builder()
+                    .withTransport(NettyTransport.builder()
+                            .withThreads(2)
+                            .build())
+                    .build();
+
+            Address clusterAddress = new Address("localhost", 5000);
+            client.connect(clusterAddress).join();
+
+            try {
+                SeederStore seederStore = (SeederStore) client.submit(new Get(title)).get();
+                int resPort;
+                if(seederStore != null){
+                    resPort = seederStore.getPort();
+                }else{
+                    System.out.println("creating new seeder");
+//
+                    resPort = FreePortFinder.findFreeLocalPort();
+                    SeederStore tmp = new SeederStore();
+                    tmp.setPort(resPort);
+
+                    client.submit(new Put(title,tmp));
+                    GrpcSeeder seeder = new GrpcSeeder(resPort, getFileName(title));
+                    seeder.run();
+                }
+
+                System.out.println("Port: " + resPort);
+                response.setPort(resPort);
+                responseObserver.onNext(response.build());
+                responseObserver.onCompleted();
+
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            }
+
+//            client.submit(new Get(title)).thenAccept(result -> {
+//                System.out.println(result);
+//
+//                int resPort = 0;
+//
+//                if (result == null) {
+//
+//                    System.out.println("creating new seeder");
+//
+//                    resPort = FreePortFinder.findFreeLocalPort();
+//                    SeederStore tmp = new SeederStore();
+//                    tmp.setPort(resPort);
+//
+//                    client.submit(new Put(title,tmp));
+//
+//                    //TODO create seeder server
+//
+//                    GrpcSeeder seeder = new GrpcSeeder(resPort);
+//                    seeder.run();
+//
+//                } else {
+//
+//                    System.out.println("reply to client");
+//
+//                    resPort = ((SeederStore) result).getPort();
+//                }
+//
+//                System.out.println(resPort);
+//
+//                portTest = resPort;
+//            });
+//            System.out.println("Test port");
+//            response.setPort(portTest);
+//            responseObserver.onNext(response.build());
+//            responseObserver.onCompleted();
+
+        /*
         try {
             InetAddress inetAddress = InetAddress.getLocalHost();
 
@@ -79,14 +166,16 @@ public class GrpcClientServices extends clientGrpc.clientImplBase {
             System.out.println("No host found");
             return;
         }
+        */
+        }
 
     }
 
     @Override
-    public void infoFile(Client.InfoFileRequest request, StreamObserver<Client.InfoFileResponse> responseObserver) {
+    public void infoFile(TheClient.InfoFileRequest request, StreamObserver<TheClient.InfoFileResponse> responseObserver) {
         //super.infoFile(request, responseObserver);
 
-        Client.InfoFileResponse.Builder response = Client.InfoFileResponse.newBuilder();
+        TheClient.InfoFileResponse.Builder response = TheClient.InfoFileResponse.newBuilder();
 
         String title = request.getFile();
 
@@ -99,7 +188,7 @@ public class GrpcClientServices extends clientGrpc.clientImplBase {
             JSONArray jsonArray = (JSONArray) jsonParser.parse(new FileReader("src/main/resources/Dataset/data.json"));
             for( int i = 0 ; i < jsonArray.size(); i++){
                 JSONObject obj = (JSONObject) jsonArray.get(i);
-                if(obj.get("file_name").toString().compareTo(title) == 0){
+                if(obj.get("title").toString().compareTo(title) == 0){
                     String str = "";
                     str += "Title : " + obj.get("title").toString() + "\n";
                     str += "Tags : " + obj.get("tags").toString() + "\n";
@@ -110,6 +199,7 @@ public class GrpcClientServices extends clientGrpc.clientImplBase {
                     response.setInfo(str);
                     responseObserver.onNext(response.build());
                     responseObserver.onCompleted();
+                    break;
                 }
             }
         } catch (Exception e){
@@ -119,4 +209,46 @@ public class GrpcClientServices extends clientGrpc.clientImplBase {
 
 
     }
+
+
+    private boolean movieExists(String title)  {
+
+        JSONParser jsonParser = new JSONParser();
+        JSONArray jsonArray = null;
+        try {
+            jsonArray = (JSONArray) jsonParser.parse(new FileReader("src/main/resources/Dataset/data.json"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        for( int i = 0 ; i < jsonArray.size(); i++) {
+            JSONObject obj = (JSONObject) jsonArray.get(i);
+            if (obj.get("title").toString().compareTo(title) == 0)
+                return true;
+        }
+        return false;
+    }
+
+    private String getFileName(String title)  {
+
+        JSONParser jsonParser = new JSONParser();
+        JSONArray jsonArray = null;
+        try {
+            jsonArray = (JSONArray) jsonParser.parse(new FileReader("src/main/resources/Dataset/data.json"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        for( int i = 0 ; i < jsonArray.size(); i++) {
+            JSONObject obj = (JSONObject) jsonArray.get(i);
+            if (obj.get("title").toString().compareTo(title) == 0)
+                return obj.get("file_name").toString();
+        }
+        return "";
+    }
+
 }

@@ -5,25 +5,26 @@ import java.util.List;
 
 public class SeederStore  {
 
-    private String streamName = "";
-    private String endpoint = "";
+    private int port;
     private List<String> watching = new LinkedList();
 
-    public String getStreamName() {
-        return streamName;
+    public int getPort() {
+        return port;
     }
 
-    public void setStreamName(String streamName) {
-        this.streamName = streamName;
+    public void setPort(int port) {
+        this.port = port;
     }
 
-    public String getEndpoint() {
-        return endpoint;
+
+    public List<String> getWatching() {
+        return watching;
     }
 
-    public void setEndpoint(String endpoint) {
-        this.endpoint = endpoint;
+    public void setWatching(List<String> watching) {
+        this.watching = watching;
     }
 
-    //TODO methods for watching list
+
+//TODO methods for watching list
 }

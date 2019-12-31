@@ -1,33 +1,39 @@
 [
   {
-    "file_name": "Big Buck Bunny",
+    "title": "Big Buck Bunny",
+    "file_name" : "big_buck_bunny_480p_stereo.avi",
     "tags": ["Comedy", "Animation"],
     "duration": "10m00s",
+    "size": 156506028,
     "year": 2008
   },
   {
-    "file_name": "The Letter",
+    "title": "The Letter",
+    "file_name" : "tl_512kb.mp4",
     "tags": ["Comedy", "Animation", "LEGO"],
     "duration": "6m30s",
+    "size": 28211605,
     "year": 2003
   },
   {
-    "file_name": "The Vagabond",
+    "title": "The Vagabond",
     "tags": ["Comedy"],
     "duration": "24m43s",
+    "size": 150003982,
     "year": 1916
   },
   {
-    "file_name": "Night of the Living Dead",
+    "title": "Night of the Living Dead",
     "tags": ["Sci-Fi", "Horror"],
     "duration": "95m17s",
+    "size": 415473786,
     "year": 1968
   },
   {
-    "file_name": "Popeye the Sailor Meets Ali Baba's Forty Thieves",
+    "title": "Popeye the Sailor Meets Ali Baba’s Forty Thieves",
     "tags": ["Comedy", "Animation"],
     "duration": "16m58s",
+    "size": 73918195,
     "year": 1937
   }
 ]
-

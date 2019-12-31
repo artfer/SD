@@ -15,6 +15,7 @@ public class KeyValueStore extends StateMachine {
         return put == null ? null : put.operation().value;
     }
 
+
     public Object get(Commit<Get> commit){
         try {
             Commit<Put> put = storage.get(commit.operation().key);

@@ -36,8 +36,7 @@ message DownloadFileRequest{
 }
 
 message DownloadFileResponse{
-    string ip = 1;
-    int32 port = 2;
+    int32 port = 1;
 }
 
 message InfoFileRequest{

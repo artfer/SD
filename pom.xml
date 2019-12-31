@@ -36,12 +36,6 @@
             <version>3.0.2</version>
         </dependency>
 
-        <!-- log -->
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
-            <version>1.7.21</version>
-        </dependency>
         <!-- disruptor -->
         <dependency>
             <groupId>com.lmax</groupId>
@@ -113,15 +107,33 @@
         </dependency>
 
         <dependency>
-            <groupId>com.abercap</groupId>
-            <artifactId>mediainfo-java-api</artifactId>
-            <version>1.0.0.RELEASE</version>
-        </dependency>
-
-        <dependency>
             <groupId>com.googlecode.json-simple</groupId>
             <artifactId>json-simple</artifactId>
             <version>1.1.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.turn</groupId>
+            <artifactId>ttorrent-core</artifactId>
+            <version>1.5</version>
+        </dependency>
+
+        <dependency>
+            <groupId>me.alexpanov</groupId>
+            <artifactId>free-port-finder</artifactId>
+            <version>1.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.7.30</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.simpleframework</groupId>
+            <artifactId>simple-http</artifactId>
+            <version>6.0.1</version>
         </dependency>
 
     </dependencies>
