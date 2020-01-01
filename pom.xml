@@ -34,6 +34,12 @@
                 <version>3.0.6</version>
             </dependency>
 
+        <dependency>
+            <groupId>io.atomix</groupId>
+            <artifactId>atomix-all</artifactId>
+            <version>1.0.8</version>
+        </dependency>
+
 
 
 

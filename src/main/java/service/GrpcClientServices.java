@@ -26,29 +26,12 @@ import java.util.concurrent.ExecutionException;
 public class GrpcClientServices extends clientGrpc.clientImplBase {
     @Override
     public void seedersList(TheClient.SeedersListRequest request, StreamObserver<TheClient.SeedersListResponse> responseObserver) {
-        //super.seedersList(request, responseObserver);
+
+        System.out.println("SeedersList Request Start");
 
         TheClient.SeedersListResponse.Builder response = TheClient.SeedersListResponse.newBuilder();
-        System.out.println("seedersList");
 
-        //TODO read all files in movies folder
-
-        System.out.println(System.getProperty("os.name"));
-
-        String path;
-        switch (System.getProperty("os.name")){
-            case "Linux":
-                path = "/home/" + System.getProperty("user.name") + "/Videos/";
-                break;
-            case "Mac OS X":
-                path = "/Users/" + System.getProperty("user.name") + "/Movies/";
-                break;
-            default:
-                path = "C:\\Users\\" + System.getProperty("user.name") + "\\Videos\\";
-                break;
-        }
-
-        File folder = new File(path);
+        File folder = new File(getPath());
         File[] listOfFiles = folder.listFiles();
 
         String str = "";
@@ -60,6 +43,8 @@ public class GrpcClientServices extends clientGrpc.clientImplBase {
         response.setSeeders(str);
         responseObserver.onNext(response.build());
         responseObserver.onCompleted();
+
+        System.out.println("SeedersList Request End \n");
     }
 
     @Override
@@ -73,6 +58,31 @@ public class GrpcClientServices extends clientGrpc.clientImplBase {
 
         System.out.println("seederSearchKeyword");
         //CODIGO
+
+        JSONParser jsonParser = new JSONParser();
+
+        //Parsing the contents of the JSON file
+        try {
+            int count = 0;
+            String str = "";
+            JSONArray jsonArray = (JSONArray) jsonParser.parse(new FileReader("src/main/resources/Dataset/data.json"));
+            for( int i = 0 ; i < jsonArray.size(); i++){
+                JSONObject obj = (JSONObject) jsonArray.get(i);
+                if(obj.get("tags").toString().contains(keyword)) {
+                    str += "\t" + obj.get("title").toString() + "\n";
+                    count++;
+                }
+            }
+            str = "Found " + count + " results:\n" + str;
+            response.setSeeders(str);
+            responseObserver.onNext(response.build());
+            responseObserver.onCompleted();
+        } catch (Exception e) {
+            System.err.println(e);
+        }
+
+
+
         response.setSeeders("seederSearchKeyword");
         responseObserver.onNext(response.build());
         responseObserver.onCompleted();
@@ -94,99 +104,17 @@ public class GrpcClientServices extends clientGrpc.clientImplBase {
 
             //TODO send info to raft
 
-            CopycatClient client = CopycatClient.builder()
-                    .withTransport(NettyTransport.builder()
-                            .withThreads(2)
-                            .build())
-                    .build();
+            int resPort;
+            resPort = FreePortFinder.findFreeLocalPort();
+            Seeder seeder = new Seeder(resPort,getFileName(title));
+            System.out.println("running seeder");
+            seeder.start();
 
-            Address clusterAddress = new Address("localhost", 5000);
-            client.connect(clusterAddress).join();
-
-            try {
-                SeederStore seederStore = (SeederStore) client.submit(new Get(title)).get();
-                int resPort;
-                if(seederStore != null){
-                    resPort = seederStore.getPort();
-                }else{
-                    System.out.println("creating new seeder");
-//
-                    resPort = FreePortFinder.findFreeLocalPort();
-                    SeederStore tmp = new SeederStore();
-                    tmp.setPort(resPort);
-
-                    client.submit(new Put(title,tmp));
-
-                    System.out.println(((SeederStore) client.submit(new Get(title)).get()).getPort());
-                    //GrpcSeeder seeder = new GrpcSeeder(resPort, getFileName(title));
-                    //seeder.run();
-                    Seeder seeder = new Seeder(resPort,getFileName(title));
-                    System.out.println("running seeder");
-                    seeder.start();
-                }
-
-                System.out.println("Port: " + resPort);
-                response.setPort(resPort);
-                responseObserver.onNext(response.build());
-                responseObserver.onCompleted();
-
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            } catch (ExecutionException e) {
-                e.printStackTrace();
-            }
-
-//            client.submit(new Get(title)).thenAccept(result -> {
-//                System.out.println(result);
-//
-//                int resPort = 0;
-//
-//                if (result == null) {
-//
-//                    System.out.println("creating new seeder");
-//
-//                    resPort = FreePortFinder.findFreeLocalPort();
-//                    SeederStore tmp = new SeederStore();
-//                    tmp.setPort(resPort);
-//
-//                    client.submit(new Put(title,tmp));
-//
-//                    //TODO create seeder server
-//
-//                    GrpcSeeder seeder = new GrpcSeeder(resPort);
-//                    seeder.run();
-//
-//                } else {
-//
-//                    System.out.println("reply to client");
-//
-//                    resPort = ((SeederStore) result).getPort();
-//                }
-//
-//                System.out.println(resPort);
-//
-//                portTest = resPort;
-//            });
-//            System.out.println("Test port");
-//            response.setPort(portTest);
-//            responseObserver.onNext(response.build());
-//            responseObserver.onCompleted();
-
-        /*
-        try {
-            InetAddress inetAddress = InetAddress.getLocalHost();
-
-            //CODIGO
-            Random rand = new Random();
-            response.setIp(inetAddress.getHostAddress()).setPort(rand.nextInt());
+            System.out.println("Port: " + resPort);
+            response.setPort(resPort);
             responseObserver.onNext(response.build());
             responseObserver.onCompleted();
 
-        } catch(UnknownHostException e){
-            System.out.println("No host found");
-            return;
-        }
-        */
         }
 
     }
@@ -214,7 +142,7 @@ public class GrpcClientServices extends clientGrpc.clientImplBase {
                     str += "Tags : " + obj.get("tags").toString() + "\n";
                     str += "Year : " + obj.get("year").toString() + "\n";
                     str += "Duration : "  + obj.get("duration").toString() + "\n";
-                    str += "Size : " + obj.get("size").toString() + "\n";
+                    str += "Size : " + (Integer.parseInt(obj.get("size").toString()) / (1024 * 1024)) + "MB\n";
 
                     response.setInfo(str);
                     responseObserver.onNext(response.build());
@@ -222,12 +150,9 @@ public class GrpcClientServices extends clientGrpc.clientImplBase {
                     break;
                 }
             }
-        } catch (Exception e){
+        } catch (Exception e) {
             System.err.println(e);
         }
-
-
-
     }
 
 
@@ -269,6 +194,22 @@ public class GrpcClientServices extends clientGrpc.clientImplBase {
                 return obj.get("file_name").toString();
         }
         return "";
+    }
+
+    private String getPath(){
+        String path;
+        switch (System.getProperty("os.name")){
+            case "Linux":
+                path = "/home/" + System.getProperty("user.name") + "/Videos/";
+                break;
+            case "Mac OS X":
+                path = "/Users/" + System.getProperty("user.name") + "/Movies/";
+                break;
+            default:
+                path = "C:\\Users\\" + System.getProperty("user.name") + "\\Videos\\";
+                break;
+        }
+        return path;
     }
 
 }

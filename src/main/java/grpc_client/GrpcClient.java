@@ -8,6 +8,7 @@ import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.UnknownHostException;
 import java.util.Scanner;
 
@@ -51,6 +52,9 @@ public class GrpcClient {
                 .newBuilder()
                 .setKeyword(keyword)
                 .build();
+
+        TheClient.SeederSearchKeywordResponse response = clientStub.seederSearchKeyword(seederSearchKeywordRequest);
+        System.out.println(response.getSeeders());
     }
 
     public static void downloadFile(){
@@ -62,19 +66,26 @@ public class GrpcClient {
         Scanner sca = new Scanner(System.in);
         String fileName = sca.nextLine();
 
-        TheClient.DownloadFileRequest downloadFileRequest = TheClient.DownloadFileRequest
-                .newBuilder()
-                .setFile(fileName)
-                .build();
+        String trueFileName = fileName.replace(" ","_") + ".mp4";
+        trueFileName = filePath + trueFileName;
+        File file = new File(trueFileName);
 
-        TheClient.DownloadFileResponse response = clientStub.downloadFile(downloadFileRequest);
-        int seederPort = response.getPort();
-        System.out.println(seederPort);
+        if(file.exists()){
+            System.out.println("File already exists, no need to download.");
+        } else {
 
-        Download download = new Download(name,seederPort,fileName);
-        download.start();
+            TheClient.DownloadFileRequest downloadFileRequest = TheClient.DownloadFileRequest
+                    .newBuilder()
+                    .setFile(fileName)
+                    .build();
 
+            TheClient.DownloadFileResponse response = clientStub.downloadFile(downloadFileRequest);
+            int seederPort = response.getPort();
+            System.out.println(seederPort);
+            Download download = new Download(name, seederPort, trueFileName);
+            download.start();
 
+        }
 
 
     }
@@ -83,6 +94,12 @@ public class GrpcClient {
     public static void listFiles(){
 
         System.out.println("Files encountered:");
+
+        File dir = new File(filePath);
+        for (File file : dir.listFiles()){
+            System.out.println(file.getName());
+        }
+
     }
 
     public static void infoFile(){
@@ -92,11 +109,9 @@ public class GrpcClient {
         Scanner sca = new Scanner(System.in);
         String fileName = sca.nextLine();
 
-        String user = System.getProperty("user.name");
-        String filePath = "/home/"+user+"/Downloads/";
-        filePath += fileName;
-
-        File file = new File(filePath);
+        String trueFileName = fileName.replace(" ","_") + ".mp4";
+        trueFileName = filePath + trueFileName;
+        File file = new File(trueFileName);
 
         if (file.exists()) {
 
@@ -123,17 +138,43 @@ public class GrpcClient {
         }
     }
 
-    public static void play(){
+    public static void play() throws IOException {
 
         System.out.println("File Name: ");
         Scanner sca = new Scanner(System.in);
         String fileName = sca.nextLine();
+        System.out.println("Playing file " + fileName);
 
-        System.out.println("Playing file " + fileName + ":");
+        fileName = fileName.replace(" ","_") + ".mp4";
+        fileName = filePath + fileName;
+
+        ProcessBuilder processBuilder = new ProcessBuilder();
+        processBuilder.command("ffplay",fileName);
+        processBuilder.start();
+
     }
 
 
-    public static void main(String[] args) throws UnknownHostException {
+    private static String filePath;
+
+    public static void main(String[] args) throws IOException {
+
+        switch (System.getProperty("os.name")){
+            case "Linux":
+                filePath = "/home/" + System.getProperty("user.name") + "/Downloads/EdgeNetflix/";
+                break;
+            case "Mac OS X":
+                filePath = "/Users/" + System.getProperty("user.name") + "/Downloads/EdgeNetflix/";
+                break;
+            default:
+                filePath = "C:\\Users\\" + System.getProperty("user.name") + "\\Downloads\\EdgeNetflix\\";
+                break;
+        }
+
+        File dir = new File(filePath);
+        if (!dir.exists())
+            dir.mkdir();
+
 
         int command = 0;
         boolean loop = true;
@@ -149,10 +190,14 @@ public class GrpcClient {
                 case 5:{ infoFile(); } break;
                 case 6:{ play(); } break;
                 case 7:{ loop = false; } break;
-                default:{ }
+                default:{
+                    System.out.println("Not a valid option. Please select one of the following:");
+                    showMenu();
+                }
             }
-            if(loop)
+            if(loop) {
                 command = sca.nextInt();
+            }
         }
 
         System.out.println("Exit client");

@@ -14,7 +14,7 @@ public class GrpcServer {
                 .addService(new GrpcClientServices())
                 .build()
                 .start();
-        System.out.println("Server running"+server.getPort());
+        System.out.println("Server running on port "+server.getPort());
         server.awaitTermination();
     }
 }
