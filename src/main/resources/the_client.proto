@@ -37,6 +37,7 @@ message DownloadFileRequest{
 
 message DownloadFileResponse{
     int32 port = 1;
+    int32 fileSize = 2;
 }
 
 message InfoFileRequest{

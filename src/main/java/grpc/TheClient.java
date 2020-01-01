@@ -2634,6 +2634,11 @@ public final class TheClient {
      * <code>int32 port = 1;</code>
      */
     int getPort();
+
+    /**
+     * <code>int32 fileSize = 2;</code>
+     */
+    int getFileSize();
   }
   /**
    * Protobuf type {@code DownloadFileResponse}
@@ -2649,6 +2654,7 @@ public final class TheClient {
     }
     private DownloadFileResponse() {
       port_ = 0;
+      fileSize_ = 0;
     }
 
     @java.lang.Override
@@ -2678,6 +2684,11 @@ public final class TheClient {
             case 8: {
 
               port_ = input.readInt32();
+              break;
+            }
+            case 16: {
+
+              fileSize_ = input.readInt32();
               break;
             }
             default: {
@@ -2721,6 +2732,15 @@ public final class TheClient {
       return port_;
     }
 
+    public static final int FILESIZE_FIELD_NUMBER = 2;
+    private int fileSize_;
+    /**
+     * <code>int32 fileSize = 2;</code>
+     */
+    public int getFileSize() {
+      return fileSize_;
+    }
+
     private byte memoizedIsInitialized = -1;
     @java.lang.Override
     public final boolean isInitialized() {
@@ -2738,6 +2758,9 @@ public final class TheClient {
       if (port_ != 0) {
         output.writeInt32(1, port_);
       }
+      if (fileSize_ != 0) {
+        output.writeInt32(2, fileSize_);
+      }
       unknownFields.writeTo(output);
     }
 
@@ -2750,6 +2773,10 @@ public final class TheClient {
       if (port_ != 0) {
         size += com.google.protobuf.CodedOutputStream
           .computeInt32Size(1, port_);
+      }
+      if (fileSize_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(2, fileSize_);
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -2769,6 +2796,8 @@ public final class TheClient {
       boolean result = true;
       result = result && (getPort()
           == other.getPort());
+      result = result && (getFileSize()
+          == other.getFileSize());
       result = result && unknownFields.equals(other.unknownFields);
       return result;
     }
@@ -2782,6 +2811,8 @@ public final class TheClient {
       hash = (19 * hash) + getDescriptor().hashCode();
       hash = (37 * hash) + PORT_FIELD_NUMBER;
       hash = (53 * hash) + getPort();
+      hash = (37 * hash) + FILESIZE_FIELD_NUMBER;
+      hash = (53 * hash) + getFileSize();
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -2917,6 +2948,8 @@ public final class TheClient {
         super.clear();
         port_ = 0;
 
+        fileSize_ = 0;
+
         return this;
       }
 
@@ -2944,6 +2977,7 @@ public final class TheClient {
       public grpc.TheClient.DownloadFileResponse buildPartial() {
         grpc.TheClient.DownloadFileResponse result = new grpc.TheClient.DownloadFileResponse(this);
         result.port_ = port_;
+        result.fileSize_ = fileSize_;
         onBuilt();
         return result;
       }
@@ -2994,6 +3028,9 @@ public final class TheClient {
         if (other == grpc.TheClient.DownloadFileResponse.getDefaultInstance()) return this;
         if (other.getPort() != 0) {
           setPort(other.getPort());
+        }
+        if (other.getFileSize() != 0) {
+          setFileSize(other.getFileSize());
         }
         this.mergeUnknownFields(other.unknownFields);
         onChanged();
@@ -3046,6 +3083,32 @@ public final class TheClient {
       public Builder clearPort() {
         
         port_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private int fileSize_ ;
+      /**
+       * <code>int32 fileSize = 2;</code>
+       */
+      public int getFileSize() {
+        return fileSize_;
+      }
+      /**
+       * <code>int32 fileSize = 2;</code>
+       */
+      public Builder setFileSize(int value) {
+        
+        fileSize_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>int32 fileSize = 2;</code>
+       */
+      public Builder clearFileSize() {
+        
+        fileSize_ = 0;
         onChanged();
         return this;
       }
@@ -4256,16 +4319,17 @@ public final class TheClient {
       "\"-\n\032SeederSearchKeywordRequest\022\017\n\007keywor" +
       "d\030\001 \001(\t\".\n\033SeederSearchKeywordResponse\022\017" +
       "\n\007seeders\030\001 \001(\t\"#\n\023DownloadFileRequest\022\014" +
-      "\n\004file\030\001 \001(\t\"$\n\024DownloadFileResponse\022\014\n\004" +
-      "port\030\001 \001(\005\"\037\n\017InfoFileRequest\022\014\n\004file\030\001 " +
-      "\001(\t\" \n\020InfoFileResponse\022\014\n\004info\030\001 \001(\t2\202\002" +
-      "\n\006client\0228\n\013SeedersList\022\023.SeedersListReq" +
-      "uest\032\024.SeedersListResponse\022P\n\023SeederSear" +
-      "chKeyword\022\033.SeederSearchKeywordRequest\032\034" +
-      ".SeederSearchKeywordResponse\022;\n\014Download" +
-      "File\022\024.DownloadFileRequest\032\025.DownloadFil" +
-      "eResponse\022/\n\010InfoFile\022\020.InfoFileRequest\032" +
-      "\021.InfoFileResponseB\006\n\004grpcb\006proto3"
+      "\n\004file\030\001 \001(\t\"6\n\024DownloadFileResponse\022\014\n\004" +
+      "port\030\001 \001(\005\022\020\n\010fileSize\030\002 \001(\005\"\037\n\017InfoFile" +
+      "Request\022\014\n\004file\030\001 \001(\t\" \n\020InfoFileRespons" +
+      "e\022\014\n\004info\030\001 \001(\t2\202\002\n\006client\0228\n\013SeedersLis" +
+      "t\022\023.SeedersListRequest\032\024.SeedersListResp" +
+      "onse\022P\n\023SeederSearchKeyword\022\033.SeederSear" +
+      "chKeywordRequest\032\034.SeederSearchKeywordRe" +
+      "sponse\022;\n\014DownloadFile\022\024.DownloadFileReq" +
+      "uest\032\025.DownloadFileResponse\022/\n\010InfoFile\022" +
+      "\020.InfoFileRequest\032\021.InfoFileResponseB\006\n\004" +
+      "grpcb\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -4314,7 +4378,7 @@ public final class TheClient {
     internal_static_DownloadFileResponse_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_DownloadFileResponse_descriptor,
-        new java.lang.String[] { "Port", });
+        new java.lang.String[] { "Port", "FileSize", });
     internal_static_InfoFileRequest_descriptor =
       getDescriptor().getMessageTypes().get(6);
     internal_static_InfoFileRequest_fieldAccessorTable = new

@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.net.UnknownHostException;
 import java.util.Scanner;
 
+
 public class GrpcClient {
 
     static String  name = "localhost";
@@ -82,7 +83,7 @@ public class GrpcClient {
             TheClient.DownloadFileResponse response = clientStub.downloadFile(downloadFileRequest);
             int seederPort = response.getPort();
             System.out.println(seederPort);
-            Download download = new Download(name, seederPort, trueFileName);
+            Download download = new Download(name, seederPort, trueFileName, response.getFileSize());
             download.start();
 
         }

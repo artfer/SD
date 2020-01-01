@@ -4,23 +4,16 @@ package service;
 import Torrent.Seeder;
 import grpc.TheClient;
 import grpc.clientGrpc;
-import io.atomix.catalyst.transport.Address;
-import io.atomix.catalyst.transport.netty.NettyTransport;
-import io.atomix.copycat.client.CopycatClient;
 import io.grpc.stub.StreamObserver;
 import me.alexpanov.net.FreePortFinder;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
-import raftus.Get;
-import raftus.Put;
-import raftus.SeederStore;
 
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.concurrent.ExecutionException;
 
 
 public class GrpcClientServices extends clientGrpc.clientImplBase {
@@ -49,6 +42,7 @@ public class GrpcClientServices extends clientGrpc.clientImplBase {
             response.setSeeders(str);
             responseObserver.onNext(response.build());
             responseObserver.onCompleted();
+            return;
         } catch (Exception e) {
             System.err.println(e);
         }
@@ -85,6 +79,7 @@ public class GrpcClientServices extends clientGrpc.clientImplBase {
             response.setSeeders(str);
             responseObserver.onNext(response.build());
             responseObserver.onCompleted();
+            return;
         } catch (Exception e) {
             System.err.println(e);
         }
@@ -111,6 +106,7 @@ public class GrpcClientServices extends clientGrpc.clientImplBase {
             seeder.start();
 
             System.out.println("Port: " + resPort);
+            response.setFileSize(getFileSize(title));
             response.setPort(resPort);
             responseObserver.onNext(response.build());
             responseObserver.onCompleted();
@@ -210,5 +206,26 @@ public class GrpcClientServices extends clientGrpc.clientImplBase {
         }
         return path;
     }
+
+    private int getFileSize(String title)  {
+
+        JSONParser jsonParser = new JSONParser();
+        JSONArray jsonArray = null;
+        try {
+            jsonArray = (JSONArray) jsonParser.parse(new FileReader("src/main/resources/Dataset/data.json"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        for( int i = 0 ; i < jsonArray.size(); i++) {
+            JSONObject obj = (JSONObject) jsonArray.get(i);
+            if (obj.get("title").toString().compareTo(title) == 0)
+                return Integer.parseInt(obj.get("size").toString());
+        }
+        return 0;
+    }
+
 
 }
