@@ -1,6 +1,7 @@
 package grpc_client;
 
 
+import Torrent.Download;
 import grpc.TheClient;
 import grpc.clientGrpc;
 import io.grpc.ManagedChannel;
@@ -67,7 +68,11 @@ public class GrpcClient {
                 .build();
 
         TheClient.DownloadFileResponse response = clientStub.downloadFile(downloadFileRequest);
-        System.out.println(response.getPort());
+        int seederPort = response.getPort();
+        System.out.println(seederPort);
+
+        Download download = new Download(name,seederPort,fileName);
+        download.start();
 
 
 

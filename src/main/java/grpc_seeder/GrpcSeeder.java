@@ -1,8 +1,6 @@
 package grpc_seeder;
 
-
 import bt.Bt;
-import bt.BtClientBuilder;
 import bt.data.Storage;
 import bt.data.file.FileSystemStorage;
 import bt.dht.DHTConfig;
@@ -10,17 +8,7 @@ import bt.dht.DHTModule;
 import bt.runtime.BtClient;
 import bt.runtime.Config;
 import com.google.inject.Module;
-import com.turn.ttorrent.common.Peer;
-import com.turn.ttorrent.common.Torrent;
-import com.turn.ttorrent.tracker.TrackedPeer;
-import com.turn.ttorrent.tracker.TrackedTorrent;
-import com.turn.ttorrent.tracker.Tracker;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.net.InetAddress;
-import java.net.InetSocketAddress;
-import java.nio.ByteBuffer;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
@@ -34,12 +22,10 @@ public class GrpcSeeder extends Thread {
         super();
         this.port = port;
         this.file = file;
-        this.path = "/Users/lucparada/Movies/";
+        this.path = "/home/artfer/Videos/";
     }
 
     public void run(){
-
-
 
 
 
@@ -60,10 +46,13 @@ public class GrpcSeeder extends Thread {
         });
 
 // get download directory
-        Path targetDirectory = Paths.get(System.getProperty("user.home"), "Downloads");
+        Path targetDirectory = Paths.get(System.getProperty("/home/artfer/Downloads/"));
 
 // create file system based backend for torrent data
         Storage storage = new FileSystemStorage(targetDirectory);
+
+
+
 // create client with a private runtime
         BtClient client = Bt.client()
                 .config(config)
@@ -73,6 +62,7 @@ public class GrpcSeeder extends Thread {
                 .module(dhtModule)
                 .stopWhenDownloaded()
                 .build();
+
 
 // launch
         client.startAsync();

@@ -1,9 +1,9 @@
 package service;
 
 
+import Torrent.Seeder;
 import grpc.TheClient;
 import grpc.clientGrpc;
-import grpc_seeder.GrpcSeeder;
 import io.atomix.catalyst.transport.Address;
 import io.atomix.catalyst.transport.netty.NettyTransport;
 import io.atomix.copycat.client.CopycatClient;
@@ -101,14 +101,23 @@ public class GrpcClientServices extends clientGrpc.clientImplBase {
                     tmp.setPort(resPort);
 
                     client.submit(new Put(title,tmp));
-                    GrpcSeeder seeder = new GrpcSeeder(resPort, getFileName(title));
-                    seeder.run();
+                    //GrpcSeeder seeder = new GrpcSeeder(resPort, getFileName(title));
+                    //seeder.run();
+//                    Seeder seeder = new Seeder(resPort,getFileName(title));
+//                    System.out.println("running seeder");
+//                    seeder.start();
                 }
 
                 System.out.println("Port: " + resPort);
                 response.setPort(resPort);
                 responseObserver.onNext(response.build());
                 responseObserver.onCompleted();
+
+                Thread.sleep(5000);
+
+                Seeder seeder = new Seeder(resPort,getFileName(title));
+                System.out.println("running seeder");
+                seeder.start();
 
             } catch (InterruptedException e) {
                 e.printStackTrace();
