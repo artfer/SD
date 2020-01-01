@@ -1,4 +1,4 @@
-package Torrent;
+package torrent;
 
 import java.io.*;
 import java.net.ServerSocket;

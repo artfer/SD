@@ -1,7 +1,7 @@
 package service;
 
 
-import Torrent.Seeder;
+import torrent.Seeder;
 import grpc.TheClient;
 import grpc.clientGrpc;
 import io.grpc.stub.StreamObserver;

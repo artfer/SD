@@ -1,7 +1,7 @@
 package grpc_client;
 
 
-import Torrent.Download;
+import torrent.Download;
 import grpc.TheClient;
 import grpc.clientGrpc;
 import io.grpc.ManagedChannel;
@@ -9,7 +9,6 @@ import io.grpc.ManagedChannelBuilder;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.UnknownHostException;
 import java.util.Scanner;
 
 

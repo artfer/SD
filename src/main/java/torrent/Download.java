@@ -1,4 +1,4 @@
-package Torrent;
+package torrent;
 
 import java.io.DataInputStream;
 import java.io.FileOutputStream;
