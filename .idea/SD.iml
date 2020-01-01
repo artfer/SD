@@ -113,7 +113,8 @@
     <orderEntry type="library" name="Maven: com.turn:ttorrent-core:1.5" level="project" />
     <orderEntry type="library" name="Maven: org.simpleframework:simple:4.1.21" level="project" />
     <orderEntry type="library" name="Maven: me.alexpanov:free-port-finder:1.0" level="project" />
-    <orderEntry type="library" name="Maven: org.slf4j:slf4j-api:1.7.30" level="project" />
+    <orderEntry type="library" name="Maven: org.slf4j:slf4j-api:1.7.5" level="project" />
+    <orderEntry type="library" name="Maven: org.slf4j:slf4j-simple:1.6.4" level="project" />
     <orderEntry type="library" name="Maven: org.simpleframework:simple-http:6.0.1" level="project" />
     <orderEntry type="library" name="Maven: org.simpleframework:simple-common:6.0.1" level="project" />
     <orderEntry type="library" name="Maven: org.simpleframework:simple-transport:6.0.1" level="project" />

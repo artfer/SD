@@ -36,11 +36,24 @@ public class GrpcClientServices extends clientGrpc.clientImplBase {
 
         String str = "";
 
-        for (File file : listOfFiles)
-            if(file.isFile())
-                str += file.getName() + "\n";
+        JSONParser jsonParser = new JSONParser();
 
-        response.setSeeders(str);
+        //Parsing the contents of the JSON file
+        try {
+            int count = 0;
+            JSONArray jsonArray = (JSONArray) jsonParser.parse(new FileReader("src/main/resources/Dataset/data.json"));
+            for( int i = 0 ; i < jsonArray.size(); i++) {
+                JSONObject obj = (JSONObject) jsonArray.get(i);
+                str += obj.get("title").toString() + "\n";
+            }
+            response.setSeeders(str);
+            responseObserver.onNext(response.build());
+            responseObserver.onCompleted();
+        } catch (Exception e) {
+            System.err.println(e);
+        }
+
+        response.setSeeders("Dataset not found");
         responseObserver.onNext(response.build());
         responseObserver.onCompleted();
 
@@ -54,14 +67,9 @@ public class GrpcClientServices extends clientGrpc.clientImplBase {
 
         TheClient.SeederSearchKeywordResponse.Builder response = TheClient.SeederSearchKeywordResponse.newBuilder();
 
-        //TODO send info to raft
-
-        System.out.println("seederSearchKeyword");
-        //CODIGO
-
         JSONParser jsonParser = new JSONParser();
 
-        //Parsing the contents of the JSON file
+
         try {
             int count = 0;
             String str = "";
@@ -73,28 +81,20 @@ public class GrpcClientServices extends clientGrpc.clientImplBase {
                     count++;
                 }
             }
-            str = "Found " + count + " results:\n" + str;
+            str = "Found " + count + " results\n" + str;
             response.setSeeders(str);
             responseObserver.onNext(response.build());
             responseObserver.onCompleted();
         } catch (Exception e) {
             System.err.println(e);
         }
-
-
-
-        response.setSeeders("seederSearchKeyword");
+        response.setSeeders("Dataset not found");
         responseObserver.onNext(response.build());
         responseObserver.onCompleted();
     }
 
-    static int portTest;
-
     @Override
     public void downloadFile(TheClient.DownloadFileRequest request, StreamObserver<TheClient.DownloadFileResponse> responseObserver) {
-        //super.downloadFile(request, responseObserver);
-
-        System.out.println("downloadFile");
 
         String title = request.getFile();
 
@@ -116,7 +116,6 @@ public class GrpcClientServices extends clientGrpc.clientImplBase {
             responseObserver.onCompleted();
 
         }
-
     }
 
     @Override
