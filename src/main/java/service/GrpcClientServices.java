@@ -33,7 +33,22 @@ public class GrpcClientServices extends clientGrpc.clientImplBase {
 
         //TODO read all files in movies folder
 
-        File folder = new File("/Users/lucparada/Movies/");
+        System.out.println(System.getProperty("os.name"));
+
+        String path;
+        switch (System.getProperty("os.name")){
+            case "Linux":
+                path = "/home/" + System.getProperty("user.name") + "/Videos/";
+                break;
+            case "Mac OS X":
+                path = "/Users/" + System.getProperty("user.name") + "/Movies/";
+                break;
+            default:
+                path = "C:\\Users\\" + System.getProperty("user.name") + "\\Videos\\";
+                break;
+        }
+
+        File folder = new File(path);
         File[] listOfFiles = folder.listFiles();
 
         String str = "";
@@ -101,23 +116,19 @@ public class GrpcClientServices extends clientGrpc.clientImplBase {
                     tmp.setPort(resPort);
 
                     client.submit(new Put(title,tmp));
+
+                    System.out.println(((SeederStore) client.submit(new Get(title)).get()).getPort());
                     //GrpcSeeder seeder = new GrpcSeeder(resPort, getFileName(title));
                     //seeder.run();
-//                    Seeder seeder = new Seeder(resPort,getFileName(title));
-//                    System.out.println("running seeder");
-//                    seeder.start();
+                    Seeder seeder = new Seeder(resPort,getFileName(title));
+                    System.out.println("running seeder");
+                    seeder.start();
                 }
 
                 System.out.println("Port: " + resPort);
                 response.setPort(resPort);
                 responseObserver.onNext(response.build());
                 responseObserver.onCompleted();
-
-                Thread.sleep(5000);
-
-                Seeder seeder = new Seeder(resPort,getFileName(title));
-                System.out.println("running seeder");
-                seeder.start();
 
             } catch (InterruptedException e) {
                 e.printStackTrace();

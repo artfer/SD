@@ -25,7 +25,7 @@ public class Upload extends Thread {
             System.out.println("Start upload");
 
             DataOutputStream dos = new DataOutputStream(socket.getOutputStream());
-            FileInputStream fis = new FileInputStream(file);
+            FileInputStream fis = new FileInputStream(path+file);
             byte[] buffer = new byte[4096];
 
             while (fis.read(buffer) > 0) {
