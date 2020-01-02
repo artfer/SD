@@ -1,19 +1,26 @@
 package service;
 
 
-import torrent.Seeder;
 import grpc.TheClient;
 import grpc.clientGrpc;
+import io.atomix.catalyst.transport.Address;
+import io.atomix.catalyst.transport.netty.NettyTransport;
+import io.atomix.copycat.client.CopycatClient;
 import io.grpc.stub.StreamObserver;
 import me.alexpanov.net.FreePortFinder;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import raftus.Get;
+import raftus.Put;
+import torrent.Seeder;
 
-import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.net.Socket;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 
 
 public class GrpcClientServices extends clientGrpc.clientImplBase {
@@ -24,12 +31,11 @@ public class GrpcClientServices extends clientGrpc.clientImplBase {
 
         TheClient.SeedersListResponse.Builder response = TheClient.SeedersListResponse.newBuilder();
 
-        File folder = new File(getPath());
-        File[] listOfFiles = folder.listFiles();
-
         String str = "";
 
         JSONParser jsonParser = new JSONParser();
+        CopycatClient client = getCopycatClient();
+        Object tmp;
 
         //Parsing the contents of the JSON file
         try {
@@ -37,11 +43,20 @@ public class GrpcClientServices extends clientGrpc.clientImplBase {
             JSONArray jsonArray = (JSONArray) jsonParser.parse(new FileReader("src/main/resources/Dataset/data.json"));
             for( int i = 0 ; i < jsonArray.size(); i++) {
                 JSONObject obj = (JSONObject) jsonArray.get(i);
-                str += obj.get("title").toString() + "\n";
+                str += obj.get("title").toString();
+
+
+                tmp = get(client, obj.get("title").toString());
+                if(tmp != null){
+                    str += " (seeding)\n";
+                } else {
+                    str += " (not seeding)\n";
+                }
             }
             response.setSeeders(str);
             responseObserver.onNext(response.build());
             responseObserver.onCompleted();
+            System.out.println("SeedersList Request End \n");
             return;
         } catch (Exception e) {
             System.err.println(e);
@@ -50,8 +65,6 @@ public class GrpcClientServices extends clientGrpc.clientImplBase {
         response.setSeeders("Dataset not found");
         responseObserver.onNext(response.build());
         responseObserver.onCompleted();
-
-        System.out.println("SeedersList Request End \n");
     }
 
     @Override
@@ -97,13 +110,36 @@ public class GrpcClientServices extends clientGrpc.clientImplBase {
 
             TheClient.DownloadFileResponse.Builder response = TheClient.DownloadFileResponse.newBuilder();
 
-            //TODO send info to raft
 
             int resPort;
-            resPort = FreePortFinder.findFreeLocalPort();
-            Seeder seeder = new Seeder(resPort,getFileName(title));
-            System.out.println("running seeder");
-            seeder.start();
+
+            CopycatClient client = getCopycatClient();
+
+            Object tmp = get(client,title);
+            if(tmp == null){
+                resPort = FreePortFinder.findFreeLocalPort();
+
+                tmp = resPort;
+                client.submit(new Put(title, tmp));
+
+                Seeder seeder = new Seeder(resPort,getFileName(title));
+                seeder.start();
+
+                System.out.println("running new seeder");
+
+            } else {
+                resPort = (int) tmp;
+
+                if(isPortAvailable(resPort)){
+                    Seeder seeder = new Seeder(resPort,getFileName(title));
+                    seeder.start();
+                    System.out.println("running new seeder");
+                } else {
+                    System.out.println("returning existing seeder");
+                }
+            }
+
+            closeCopycatClient(client);
 
             System.out.println("Port: " + resPort);
             response.setFileSize(getFileSize(title));
@@ -191,22 +227,6 @@ public class GrpcClientServices extends clientGrpc.clientImplBase {
         return "";
     }
 
-    private String getPath(){
-        String path;
-        switch (System.getProperty("os.name")){
-            case "Linux":
-                path = "/home/" + System.getProperty("user.name") + "/Videos/";
-                break;
-            case "Mac OS X":
-                path = "/Users/" + System.getProperty("user.name") + "/Movies/";
-                break;
-            default:
-                path = "C:\\Users\\" + System.getProperty("user.name") + "\\Videos\\";
-                break;
-        }
-        return path;
-    }
-
     private int getFileSize(String title)  {
 
         JSONParser jsonParser = new JSONParser();
@@ -226,6 +246,61 @@ public class GrpcClientServices extends clientGrpc.clientImplBase {
         }
         return 0;
     }
+
+    private CopycatClient getCopycatClient(){
+        CopycatClient client = CopycatClient.builder()
+                .withTransport(NettyTransport.builder()
+                        .withThreads(1)
+                        .build())
+                .build();
+
+        Address clusterAddress = new Address("localhost", 5000);
+        client.connect(clusterAddress).join();
+        return client;
+    }
+
+
+    private void closeCopycatClient(CopycatClient client){
+        client.close();
+    }
+
+    private void put(CopycatClient client,String key, int value){
+
+        try {
+            CompletableFuture<Object> future = client.submit(new Put(key, value));
+            future.get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private Object get(CopycatClient client,String key){
+        try {
+            CompletableFuture<Object> future = client.submit(new Get(key));
+            return future.get();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+
+    private boolean isPortAvailable(int port){
+        try (Socket s = new Socket("localhost", port)) {
+            return true;
+        } catch (IOException ex) {
+            /* ignore */
+        }
+        return false;
+    }
+
+
+
+
+
 
 
 }

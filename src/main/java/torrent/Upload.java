@@ -15,7 +15,7 @@ public class Upload extends Thread {
     public Upload(Socket socket, String file,int port) {
         this.socket = socket;
         this.file = file;
-        this.path = "/home/artfer/Videos/";
+        this.path = getPath();
         this.port = port;
     }
 
@@ -41,4 +41,21 @@ public class Upload extends Thread {
             System.err.println(e);
         }
     }
+
+    private String getPath(){
+        String path;
+        switch (System.getProperty("os.name")){
+            case "Linux":
+                path = "/home/" + System.getProperty("user.name") + "/Videos/";
+                break;
+            case "Mac OS X":
+                path = "/Users/" + System.getProperty("user.name") + "/Movies/";
+                break;
+            default:
+                path = "C:\\Users\\" + System.getProperty("user.name") + "\\Videos\\";
+                break;
+        }
+        return path;
+    }
+
 }

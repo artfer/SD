@@ -19,12 +19,12 @@ public class GrpcClient {
 
     public static void showMenu(){
         System.out.println("0: Menu");
-        System.out.println("1: Seeder list");
-        System.out.println("2: Seeder search by Keyword [words]");
-        System.out.println("3: Download [file name]");
+        System.out.println("1: Video list");
+        System.out.println("2: Search by [keyword]");
+        System.out.println("3: Download [file]");
         System.out.println("4: List files");
-        System.out.println("5: Info [file name]");
-        System.out.println("6: Play [file name]");
+        System.out.println("5: Info [file]");
+        System.out.println("6: Play [file]");
         System.out.println("7: Exit");
     }
 
