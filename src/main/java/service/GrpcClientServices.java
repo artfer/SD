@@ -18,9 +18,7 @@ import torrent.Seeder;
 
 import java.io.FileReader;
 import java.io.IOException;
-import java.net.Socket;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
 
 
 public class GrpcClientServices extends clientGrpc.clientImplBase {
@@ -129,14 +127,7 @@ public class GrpcClientServices extends clientGrpc.clientImplBase {
 
             } else {
                 resPort = (int) tmp;
-
-                if(isPortAvailable(resPort)){
-                    Seeder seeder = new Seeder(resPort,getFileName(title));
-                    seeder.start();
-                    System.out.println("running new seeder");
-                } else {
-                    System.out.println("returning existing seeder");
-                }
+                System.out.println("returning existing seeder");
             }
 
             closeCopycatClient(client);
@@ -264,18 +255,6 @@ public class GrpcClientServices extends clientGrpc.clientImplBase {
         client.close();
     }
 
-    private void put(CopycatClient client,String key, int value){
-
-        try {
-            CompletableFuture<Object> future = client.submit(new Put(key, value));
-            future.get();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        }
-    }
-
     private Object get(CopycatClient client,String key){
         try {
             CompletableFuture<Object> future = client.submit(new Get(key));
@@ -286,21 +265,4 @@ public class GrpcClientServices extends clientGrpc.clientImplBase {
         }
         return null;
     }
-
-
-    private boolean isPortAvailable(int port){
-        try (Socket s = new Socket("localhost", port)) {
-            return true;
-        } catch (IOException ex) {
-            /* ignore */
-        }
-        return false;
-    }
-
-
-
-
-
-
-
 }
