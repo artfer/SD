@@ -146,7 +146,7 @@ public class GrpcClient {
 
         System.out.println("File Name: ");
         Scanner sca = new Scanner(System.in);
-        String fileName = sca.nextLine();
+        String fileName = sca.nextLine().trim();
         System.out.println("Playing file " + fileName);
 
         fileName = fileName.replace(" ","_") + ".mp4";
