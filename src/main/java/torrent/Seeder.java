@@ -41,7 +41,8 @@ public class Seeder extends Thread {
                 .setPort(port)
                 .build();
 
-        SeederServer.registerResponse response = seeder_serverStub.register(registerRequest);
+        seeder_serverStub.register(registerRequest);
+        System.out.println("im a seeder");
 
         while (true) {
             try {
