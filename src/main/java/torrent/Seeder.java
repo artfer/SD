@@ -32,7 +32,7 @@ public class Seeder extends Thread {
 
         }
 
-        ManagedChannel channel = ManagedChannelBuilder.forAddress("localhost", 8989).usePlaintext().build();
+        ManagedChannel channel = ManagedChannelBuilder.forAddress("35.241.190.139",  80).usePlaintext().build();
         seeder_serverGrpc.seeder_serverBlockingStub seeder_serverStub = seeder_serverGrpc.newBlockingStub(channel);
 
         SeederServer.registerRequest registerRequest = SeederServer.registerRequest

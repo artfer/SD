@@ -17,6 +17,8 @@ import torrent.Seeder;
 
 import java.io.FileReader;
 import java.io.IOException;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.concurrent.CompletableFuture;
 
 
@@ -25,6 +27,11 @@ public class GrpcClientServices extends clientGrpc.clientImplBase {
     public void seedersList(TheClient.SeedersListRequest request, StreamObserver<TheClient.SeedersListResponse> responseObserver) {
 
         System.out.println("SeedersList Request Start");
+        try {
+            System.out.println("I'm the server -> " + InetAddress.getLocalHost());
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+        }
 
         TheClient.SeedersListResponse.Builder response = TheClient.SeedersListResponse.newBuilder();
 
