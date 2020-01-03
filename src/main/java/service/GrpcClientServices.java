@@ -7,12 +7,12 @@ import io.atomix.catalyst.transport.Address;
 import io.atomix.catalyst.transport.netty.NettyTransport;
 import io.atomix.copycat.client.CopycatClient;
 import io.grpc.stub.StreamObserver;
-import me.alexpanov.net.FreePortFinder;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import raftus.Get;
+import raftus.Put;
 import torrent.Seeder;
 
 import java.io.FileReader;
@@ -116,9 +116,9 @@ public class GrpcClientServices extends clientGrpc.clientImplBase {
 
                 Object tmp = get(client, getFileName(title));
                 if (tmp == null) {
-                    resPort = FreePortFinder.findFreeLocalPort();
+                    resPort = getFilePort(title);
 
-                    //client.submit(new Put(title, resPort));
+                    client.submit(new Put(title, resPort));
 
                     Seeder seeder = new Seeder(resPort, getFileName(title));
                     seeder.start();
@@ -242,6 +242,26 @@ public class GrpcClientServices extends clientGrpc.clientImplBase {
             JSONObject obj = (JSONObject) jsonArray.get(i);
             if (obj.get("title").toString().compareTo(title) == 0)
                 return Integer.parseInt(obj.get("size").toString());
+        }
+        return 0;
+    }
+
+    private int getFilePort(String title)  {
+
+        JSONParser jsonParser = new JSONParser();
+        JSONArray jsonArray = null;
+        try {
+            jsonArray = (JSONArray) jsonParser.parse(new FileReader("src/main/resources/Dataset/data.json"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        for( int i = 0 ; i < jsonArray.size(); i++) {
+            JSONObject obj = (JSONObject) jsonArray.get(i);
+            if (obj.get("title").toString().compareTo(title) == 0)
+                return Integer.parseInt(obj.get("port").toString());
         }
         return 0;
     }
