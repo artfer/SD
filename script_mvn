@@ -1,5 +1,7 @@
 killall -9 java > /dev/null 2>&1
 rm -rf logs > /dev/null 2>&1
 mvn package > /dev/null 2>&1
-mvn exec:java -Dexec.mainClass="server.Server" &
+mvn exec:java -Dexec.mainClass="server.Server" -Dexec.args="7000" &
+mvn exec:java -Dexec.mainClass="server.Server" -Dexec.args="7001" &
+mvn exec:java -Dexec.mainClass="server.Server" -Dexec.args="7002" &
 mvn exec:java -Dexec.mainClass="raftus.RaftServer"
