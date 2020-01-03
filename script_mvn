@@ -1,0 +1,3 @@
+killall -9 java &
+mvn exec:java -Dexec.mainClass="server.Server" &
+mvn exec:java -Dexec.mainClass="raftus.RaftServer"

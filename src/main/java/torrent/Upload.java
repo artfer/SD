@@ -43,19 +43,22 @@ public class Upload extends Thread {
     }
 
     private String getPath(){
+        return "/home/lucparada/movies/";
+        /*
         String path;
         switch (System.getProperty("os.name")){
             case "Linux":
                 path = "/home/" + System.getProperty("user.name") + "/Videos/";
                 break;
             case "Mac OS X":
-                path = "/Users/" + System.getProperty("user.name") + "/Movies/";
+                path = "/Users/" + System.getProperty("user.name") + "/movies/";
                 break;
             default:
                 path = "C:\\Users\\" + System.getProperty("user.name") + "\\Videos\\";
                 break;
         }
         return path;
+        */
     }
 
 }
