@@ -28,8 +28,12 @@ public class Upload extends Thread {
             FileInputStream fis = new FileInputStream(path+file);
             byte[] buffer = new byte[4096];
 
+            int i = 1;
             while (fis.read(buffer) > 0) {
+
                 dos.write(buffer);
+                System.out.println(i*4096/1024);
+                i++;
             }
 
             fis.close();

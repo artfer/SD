@@ -14,7 +14,7 @@ import java.util.Scanner;
 
 public class GrpcClient {
 
-    static String  name = "localhost";
+    static String  name = "35.241.190.139";
     static int port = 8989;
 
     public static void showMenu(){
