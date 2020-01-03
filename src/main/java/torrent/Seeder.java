@@ -1,6 +1,11 @@
 package torrent;
 
-import java.io.*;
+import grpc.SeederServer;
+import grpc.seeder_serverGrpc;
+import io.grpc.ManagedChannel;
+import io.grpc.ManagedChannelBuilder;
+
+import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -27,6 +32,16 @@ public class Seeder extends Thread {
 
         }
 
+        ManagedChannel channel = ManagedChannelBuilder.forAddress("localhost", 8989).usePlaintext().build();
+        seeder_serverGrpc.seeder_serverBlockingStub seeder_serverStub = seeder_serverGrpc.newBlockingStub(channel);
+
+        SeederServer.registerRequest registerRequest = SeederServer.registerRequest
+                .newBuilder()
+                .setFile(file)
+                .setPort(port)
+                .build();
+
+        SeederServer.registerResponse response = seeder_serverStub.register(registerRequest);
 
         while (true) {
             try {

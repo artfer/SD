@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+option java_package = "grpc";
+
+service seeder_server{
+
+    // register seeder in db
+    rpc register(registerRequest) returns (registerResponse);
+
+}
+
+message registerRequest{
+    string file = 1;
+    int32 port = 2;
+}
+
+message registerResponse {
+    int32 status = 1;
+}

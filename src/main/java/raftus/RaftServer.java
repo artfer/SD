@@ -9,10 +9,10 @@ import io.atomix.copycat.server.storage.StorageLevel;
 
 import java.io.File;
 
-public class RaftServer extends Thread{
+public class RaftServer{
 
 
-    public void run() {
+    public static void main(String args[]) {
 
         Address address = new Address("localhost", 5000);
         CopycatServer.Builder builder = CopycatServer.builder(address);
@@ -40,6 +40,7 @@ public class RaftServer extends Thread{
 
         clusterAddress = new Address("localhost", 5003);
         server.join(clusterAddress).thenAccept(srvr -> System.out.println(srvr + " has joined the cluster"));
+
 
 
 

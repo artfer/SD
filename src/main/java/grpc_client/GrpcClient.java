@@ -81,9 +81,13 @@ public class GrpcClient {
 
             TheClient.DownloadFileResponse response = clientStub.downloadFile(downloadFileRequest);
             int seederPort = response.getPort();
-            System.out.println(seederPort);
-            Download download = new Download(name, seederPort, trueFileName, response.getFileSize());
-            download.start();
+            if(seederPort != 0) {
+                System.out.println(seederPort);
+                Download download = new Download(name, seederPort, trueFileName, response.getFileSize());
+                download.start();
+            } else {
+                System.out.println("File doesn't exist");
+            }
 
         }
 

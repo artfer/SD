@@ -13,7 +13,6 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import raftus.Get;
-import raftus.Put;
 import torrent.Seeder;
 
 import java.io.FileReader;
@@ -44,7 +43,7 @@ public class GrpcClientServices extends clientGrpc.clientImplBase {
                 str += obj.get("title").toString();
 
 
-                tmp = get(client, obj.get("title").toString());
+                tmp = get(client, getFileName(obj.get("title").toString()));
                 if(tmp != null){
                     str += " (seeding)\n";
                 } else {
@@ -111,32 +110,41 @@ public class GrpcClientServices extends clientGrpc.clientImplBase {
 
             int resPort;
 
-            CopycatClient client = getCopycatClient();
+            if(getFileName(title).compareTo("") != 0) {
 
-            Object tmp = get(client,title);
-            if(tmp == null){
-                resPort = FreePortFinder.findFreeLocalPort();
+                CopycatClient client = getCopycatClient();
 
-                tmp = resPort;
-                client.submit(new Put(title, tmp));
+                Object tmp = get(client, getFileName(title));
+                if (tmp == null) {
+                    resPort = FreePortFinder.findFreeLocalPort();
 
-                Seeder seeder = new Seeder(resPort,getFileName(title));
-                seeder.start();
+                    //client.submit(new Put(title, resPort));
 
-                System.out.println("running new seeder");
+                    Seeder seeder = new Seeder(resPort, getFileName(title));
+                    seeder.start();
 
-            } else {
-                resPort = (int) tmp;
-                System.out.println("returning existing seeder");
+                    System.out.println("running new seeder");
+
+                } else {
+                    resPort = (int) tmp;
+                    System.out.println("returning existing seeder");
+                }
+
+                closeCopycatClient(client);
+
+                System.out.println("Port: " + resPort);
+                response.setFileSize(getFileSize(title));
+                response.setPort(resPort);
+                responseObserver.onNext(response.build());
+                responseObserver.onCompleted();
+                return;
             }
 
-            closeCopycatClient(client);
-
-            System.out.println("Port: " + resPort);
-            response.setFileSize(getFileSize(title));
-            response.setPort(resPort);
+            response.setFileSize(0);
+            response.setPort(0);
             responseObserver.onNext(response.build());
             responseObserver.onCompleted();
+
 
         }
     }
