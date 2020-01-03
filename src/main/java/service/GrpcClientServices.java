@@ -21,10 +21,20 @@ import java.util.concurrent.CompletableFuture;
 
 
 public class GrpcClientServices extends clientGrpc.clientImplBase {
+
+    int my_port;
+    public GrpcClientServices(int my_port){
+        super();
+        this.my_port = my_port;
+    }
+
+
     @Override
     public void seedersList(TheClient.SeedersListRequest request, StreamObserver<TheClient.SeedersListResponse> responseObserver) {
 
         System.out.println("SeedersList Request Start");
+
+        System.out.println("Server port is -> " + my_port);
 
         TheClient.SeedersListResponse.Builder response = TheClient.SeedersListResponse.newBuilder();
 
