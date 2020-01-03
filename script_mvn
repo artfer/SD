@@ -1,6 +1,5 @@
 killall -9 java > /dev/null 2>&1
 rm -rf logs > /dev/null 2>&1
-source /etc/environment
 mvn package > /dev/null 2>&1
 mvn exec:java -Dexec.mainClass="server.Server" -Dexec.args="7000" &
 mvn exec:java -Dexec.mainClass="server.Server" -Dexec.args="7001" &
