@@ -129,8 +129,8 @@ public class GrpcClientServices extends clientGrpc.clientImplBase {
                     resPort = (int) tmp;
                     System.out.println("returning existing seeder");
                 }
-
                 closeCopycatClient(client);
+
 
                 System.out.println("Port: " + resPort);
                 response.setFileSize(getFileSize(title));
